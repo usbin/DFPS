@@ -12,6 +12,8 @@ public class Player : LivingEntity
 
     public enum ViewMode { FIRST_PERSON, TOPDOWN }
 
+    
+
     public override void Start()
     {
         base.Start();
@@ -26,5 +28,7 @@ public class Player : LivingEntity
     {
         _viewCamera = args.ViewCamera;
     }
+
+
 
 }

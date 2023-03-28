@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IDamagable
 {
-    public abstract float Def { get; }
-    public void TakeHit(float damage);
+    public abstract int Def { get; set; }
+    public void TakeHit(int damage);
 }

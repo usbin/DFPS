@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ICombatable
 {
-    public abstract float Atk { get; }
+    public abstract int Atk { get; set; }
 }

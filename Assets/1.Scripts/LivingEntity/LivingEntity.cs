@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class LivingEntity : MonoBehaviour, IDamagable, ICombatable
 {
-    public float MaxHp;
-    public float Speed;
-    protected float hp;
+    public int MaxHp;
+    public int Speed;
+    protected int hp;
     protected bool dead = false;
-    float _atk;
-    float _def;
-    public float Atk => _atk;
-    public float Def => _def;
+
+    [field:SerializeField]
+    public int Atk { get; set; }
+    [field: SerializeField]
+    public int Def { get; set; }
 
     public virtual void Start()
     {
@@ -24,7 +25,7 @@ public class LivingEntity : MonoBehaviour, IDamagable, ICombatable
         Destroy(gameObject);
     }
 
-    public void TakeHit(float damage)
+    public void TakeHit(int damage)
     {
         hp -= damage;
         if (hp <= 0 && !dead)

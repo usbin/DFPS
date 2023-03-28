@@ -37,12 +37,13 @@ public class PlayerController : MonoBehaviour
         args.Input = _input;
         args.Player = _player;
         args.PlayerController = this;
-        _currentControl.Update(args);
+
+        if(_currentControl != null) _currentControl.Update(args);
     }
 
     private void FixedUpdate()
     {
-        _currentControl.ApplyChange();
+        if (_currentControl != null) _currentControl.ApplyChange();
     }
     
 

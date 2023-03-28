@@ -28,7 +28,7 @@ public class Gun : Weapon
                 IDamagable damagable = hit.collider.GetComponent<IDamagable>();
                 //attacker의 스탯과 무기 damage를 계산
                 float totalDamage = CombatSystem.CalculateInflictedDamage(args.Attacker, this, damagable);
-                if (damagable != null) damagable.TakeHit(totalDamage);
+                if (damagable != null) damagable.TakeHit((int)totalDamage);
             }
             _remainShootTerm = ShootTerm;
 
