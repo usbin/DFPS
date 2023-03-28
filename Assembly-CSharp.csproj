@@ -53,27 +53,27 @@
     <UnityVersion>2020.3.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\1.Scripts\Camera\Camera_FirstPersonView.cs" />
-    <Compile Include="Assets\1.Scripts\Camera\Camera_TopdownView.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Player\PlayerController.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Player\PlayerControl_FirstPerson.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\ICombatable.cs" />
-    <Compile Include="Assets\1.Scripts\Weapon\Weapon.cs" />
-    <Compile Include="Assets\1.Scripts\Director.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\IDamagable.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Enemy.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Player\PlayerControl.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Player\PlayerControl_Topdown.cs" />
-    <Compile Include="Assets\1.Scripts\Weapon\Gun.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Player\Player.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\LivingEntity.cs" />
-    <Compile Include="Assets\1.Scripts\Static\CombatSystem.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Player\WeaponController.cs" />
-    <Compile Include="Assets\1.Scripts\Item\Item.cs" />
-    <Compile Include="Assets\1.Scripts\Item\Effect\Effector.cs" />
-    <Compile Include="Assets\1.Scripts\Item\ItemOnField.cs" />
-    <Compile Include="Assets\1.Scripts\Item\Effect\AppleEffector.cs" />
-    <Compile Include="Assets\1.Scripts\LivingEntity\Player\PlayerEffectController.cs" />
+    <Compile Include="Assets\Scripts\Camera\Camera_FirstPersonView.cs" />
+    <Compile Include="Assets\Scripts\Camera\Camera_TopdownView.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Player\PlayerControl_FirstPerson.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\ICombatable.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Director.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\IDamagable.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Enemy.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Player\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Player\PlayerControl_Topdown.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\LivingEntity.cs" />
+    <Compile Include="Assets\Scripts\Static\CombatSystem.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Player\WeaponController.cs" />
+    <Compile Include="Assets\Scripts\Item\Item.cs" />
+    <Compile Include="Assets\Scripts\Item\Effect\Effector.cs" />
+    <Compile Include="Assets\Scripts\Item\ItemOnField.cs" />
+    <Compile Include="Assets\Scripts\Item\Effect\AppleEffector.cs" />
+    <Compile Include="Assets\Scripts\LivingEntity\Player\PlayerEffectController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -91,7 +91,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\FoodAndGrocery\Info.txt" />
+    <None Include="Assets\__git_ignore\FoodAndGrocery\Info.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
