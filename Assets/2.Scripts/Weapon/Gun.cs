@@ -15,20 +15,23 @@ public class Gun : Weapon
     {
         _remainShootTerm -= Time.deltaTime;
     }
-    public override void NormalAttack(WeaponController.AttackArgs args)
+    public override void NormalAttack(AttackArgs args)
     {
         if (_remainShootTerm <= 0)
         {
             Ray ray = new Ray(args.Origin, args.Direction);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Distance, Layermask, QueryTriggerInteraction.Collide))
+            if (Physics.Raycast(ray, out hit, Distance))
             {
-                Vector3 point = hit.point;
-                Debug.DrawRay(ray.origin, point - ray.origin);
                 IDamagable damagable = hit.collider.GetComponent<IDamagable>();
-                //attacker의 스탯과 무기 damage를 계산
-                float totalDamage = CombatSystem.CalculateInflictedDamage(args.Attacker, this, damagable);
-                if (damagable != null) damagable.TakeHit((int)totalDamage);
+                if(damagable != null)
+                {
+                    Vector3 point = hit.point;
+                    Debug.DrawRay(ray.origin, point - ray.origin);
+                    //attacker의 스탯과 무기 damage를 계산
+                    float totalDamage = CombatSystem.CalculateInflictedDamage(args.Attacker, this, damagable);
+                    damagable.TakeHit((int)totalDamage);
+                }
             }
             _remainShootTerm = ShootTerm;
 

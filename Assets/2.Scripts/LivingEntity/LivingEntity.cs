@@ -6,6 +6,7 @@ public class LivingEntity : MonoBehaviour, IDamagable, ICombatable
 {
     public event System.Action<LivingEntity> OnDeath;
 
+    
     public Item[] DropItems;
     public int MaxHp;
     public int Speed;
@@ -21,19 +22,26 @@ public class LivingEntity : MonoBehaviour, IDamagable, ICombatable
     {
         hp = MaxHp;
     }
-
+    public virtual void Update()
+    {
+        if (transform.position.y < -10) Die();
+    }
     public virtual void Die()
     {
         dead = true;
-
+        
         //아이템 드롭
-        int randomIndex = Random.Range(0, DropItems.Length);
-        Item item = Instantiate(DropItems[randomIndex]);
-        item.transform.position = transform.position;
+        if(DropItems.Length > 0)
+        {
+            int randomIndex = Random.Range(0, DropItems.Length);
+            Item item = Instantiate(DropItems[randomIndex]);
+            item.transform.position = transform.position;
+        }
 
         //이벤트 발생
-        OnDeath(this);
-
+        if(OnDeath != null)
+            OnDeath(this);
+        Debug.Log(gameObject.name + " 사망");
         Destroy(gameObject);
     }
 

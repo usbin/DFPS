@@ -8,4 +8,8 @@ public class CombatSystem : MonoBehaviour
     {
         return Mathf.Max(attacker.Atk + attackerWeapon.Atk - target.Def, 1);
     }
+    public static float CalculateInflictedDamage(CombatArgs args)
+    {
+        return Mathf.Max(args.AttackerAtk - args.DefenderDef, 1);
+    }
 }

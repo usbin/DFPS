@@ -20,8 +20,9 @@ public class Player : LivingEntity
     }
 
 
-    public void Update()
+    public override void Update()
     {
+        base.Update();
     }
 
     public void OnViewModeChanged(ModeSwitcher.ViewModeChangedArgs args)

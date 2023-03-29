@@ -35,7 +35,7 @@ public class PlayerControl_Topdown : BasePlayerControl
         RaycastHit hit;
         LayerMask layerMask = LayerMask.NameToLayer("Item");
 
-        if(!Physics.Raycast(moveRay,out hit, player.Speed, ~layerMask, QueryTriggerInteraction.Ignore))
+        if(!Physics.Raycast(moveRay,out hit, 1, ~layerMask, QueryTriggerInteraction.Ignore))
         {
             Move(movement);
         }

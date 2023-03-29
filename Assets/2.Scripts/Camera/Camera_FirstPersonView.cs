@@ -8,8 +8,16 @@ public class Camera_FirstPersonView : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 playerForword = Player.transform.forward;
-        transform.position = Player.transform.position;
-        transform.rotation = Player.transform.rotation;
+        if (Player)
+        {
+            Vector3 playerForword = Player.transform.forward;
+            transform.position = new Vector3(
+                Player.transform.position.x,
+                Player.transform.position.y + 1,
+                Player.transform.position.z
+                );
+            transform.rotation = Player.transform.rotation;
+
+        }
     }
 }

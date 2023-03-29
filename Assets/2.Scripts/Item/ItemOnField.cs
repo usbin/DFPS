@@ -24,7 +24,13 @@ public class ItemOnField : MonoBehaviour
     }
     void Update()
     {
-        
+
+        if(_item.transform.position.y < -10)
+        {
+            Destroy(gameObject);
+        }
+
+
     }
     IEnumerator FallDown()
     {
@@ -33,6 +39,8 @@ public class ItemOnField : MonoBehaviour
         while(!Physics.Raycast(_item.transform.position, Vector3.down, distance))
         {
             _item.transform.Translate(Vector3.down * distance);
+
+
             yield return null;
         }
 

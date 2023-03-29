@@ -11,5 +11,5 @@ public abstract class Weapon : MonoBehaviour
     }
     public WeaponType Type;
     public float Atk;
-    public abstract void NormalAttack(WeaponController.AttackArgs args);
+    public abstract void NormalAttack(AttackArgs args);
 }

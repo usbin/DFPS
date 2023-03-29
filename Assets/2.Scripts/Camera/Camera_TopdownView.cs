@@ -8,6 +8,7 @@ public class Camera_TopdownView : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
+        if(Player)
+            transform.position = new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z);
     }
 }

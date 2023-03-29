@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Terrain GameMap;
     public Wave[] Waves;        //***웨이브: 인덱스 0부터 저장
     public CapsuleCollider SpawnArea;  //스폰할 지역
 
@@ -14,7 +13,6 @@ public class EnemySpawner : MonoBehaviour
     float _remainSpawnCooltime; // 스폰 주기
     const float cSpawnCooltime = 0.5f;       // 다음 스폰까지 남은 시간
 
-    int _retryCount;            // 맵이 꽉 차서 재귀가 끝없이 일어나는 것 방지.
 
     private void Start()
     {
@@ -41,10 +39,6 @@ public class EnemySpawner : MonoBehaviour
                 NextWave();
             }
         }
-        
-
-
-        
     }
     public void NextWave()
     {

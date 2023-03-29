@@ -100,12 +100,5 @@ public class WeaponController : MonoBehaviour
         
     }
 
-    public struct AttackArgs
-    {
-        public ICombatable Attacker;
-
-        // ÃÑÀÇ °æ¿ì
-        public Vector3 Origin;
-        public Vector3 Direction;
-    }
+    
 }
