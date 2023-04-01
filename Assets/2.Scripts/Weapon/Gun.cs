@@ -10,7 +10,11 @@ public class Gun : Weapon
     public float Distance;
 
     float _remainShootTerm;
-
+    LineRenderer _lineRenderer;
+    private void Awake()
+    {
+        _lineRenderer = GetComponent<LineRenderer>();
+    }
     public void Update()
     {
         _remainShootTerm -= Time.deltaTime;
@@ -32,6 +36,10 @@ public class Gun : Weapon
                     //attacker의 스탯과 무기 damage를 계산
                     float totalDamage = CombatSystem.CalculateInflictedDamage(args.Attacker.Atk + Atk, combatable.Def);
                     combatable.TakeHit((int)totalDamage, args);
+                    if (_lineRenderer)
+                    {
+                        StartCoroutine(ShootLine(transform.position, point));
+                    }
                 }
             }
 
@@ -42,5 +50,19 @@ public class Gun : Weapon
 
         }
         else return false;
+    }
+    IEnumerator ShootLine(Vector3 origin, Vector3 destination)
+    {
+        _lineRenderer.enabled = true;
+        _lineRenderer.SetPosition(0, origin);
+        _lineRenderer.SetPosition(1, destination);
+        float duration = 0.02f;
+        while (duration > 0)
+        {
+            duration -= Time.deltaTime;
+            yield return null;
+
+        }
+        _lineRenderer.enabled = false;
     }
 }

@@ -116,6 +116,7 @@ MonoBehaviour:
   MaxHp: 5
   Speed: 5
   <Atk>k__BackingField: 1
+  <AtkSpeed>k__BackingField: 0
   <Def>k__BackingField: 0
   Projectile: {fileID: 5937249126601700303, guid: b01fbac8c8db5f54a822628f0896ef77, type: 3}
 --- !u!195 &8292703372782162077

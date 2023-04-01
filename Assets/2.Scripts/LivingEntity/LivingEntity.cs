@@ -10,6 +10,7 @@ public class LivingEntity : MonoBehaviour, ICombatable
     public Item[] DropItems;
     public int MaxHp;
     public int Speed;
+    public int Hp { get => hp;}
     protected int hp;
     protected bool dead = false;
 

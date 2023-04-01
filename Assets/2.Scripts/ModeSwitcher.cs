@@ -96,6 +96,7 @@ public class ModeSwitcher : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+            Time.timeScale = 0;
         }
         else
         {
@@ -105,6 +106,8 @@ public class ModeSwitcher : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.Locked;
             }
+
+            Time.timeScale = 1;
         }
 
         // Ui Äµ¹ö½º 
@@ -128,6 +131,7 @@ public class ModeSwitcher : MonoBehaviour
             SetUiMode(false);
         }
     }
+
 
     public struct ViewModeChangedArgs
     {

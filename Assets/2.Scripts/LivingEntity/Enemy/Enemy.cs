@@ -67,8 +67,7 @@ public class Enemy : LivingEntity
             {
                 _stat = Stat.Attacking;
                 //플레이어에게 투사체 날리기
-                Vector3 position = new Vector3(transform.position.x, _target.position.y, transform.position.z);
-                Projectile projectile = Instantiate(Projectile, position, transform.rotation);
+                Projectile projectile = Instantiate(Projectile, transform.position, Quaternion.LookRotation(_target.position - transform.position));
                 projectile.Attacker = this;
                 _stat = Stat.Moving;
                 yield return new WaitForSeconds(cAttackCooltime);
