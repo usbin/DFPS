@@ -8,7 +8,6 @@ public class PlayerEffectController : MonoBehaviour
     Player _player;
     // 현재 플레이어에게 적용된 이펙트들
     List<BaseEffector> _effects = new List<BaseEffector>();
-    List<BaseEffector> _endEffects;
 
     private void Awake()
     {
