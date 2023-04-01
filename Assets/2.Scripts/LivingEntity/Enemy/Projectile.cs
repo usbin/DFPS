@@ -8,9 +8,11 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public ICombatable Attacker;
     public int Atk;
     public int Speed;
     public float Distance;
+    
 
     float _currentDistance; //현재 날아온 거리
 
@@ -34,11 +36,13 @@ public class Projectile : MonoBehaviour
             _target = hit.collider.GetComponent<Player>();
             if(_target != null)
             {
-                CombatArgs args;
-                args.AttackerAtk = Atk;
-                args.DefenderDef = _target.Def;
-                float damage = CombatSystem.CalculateInflictedDamage(args);
-                _target.TakeHit((int)damage);
+                AttackArgs args;
+                args.Attacker = Attacker;
+                args.Defender = _target;
+                args.Direction = ray.direction;
+                args.Origin = ray.origin;
+                float damage = CombatSystem.CalculateInflictedDamage(Atk + Attacker.Atk, _target.Def);
+                _target.TakeHit((int)damage, args);
                 Destroy(gameObject);
             }
             else

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 
 [RequireComponent(typeof(Player))]
@@ -10,6 +11,8 @@ public class WeaponController : MonoBehaviour
 {
     public Transform GunHold;
     public Weapon InitialWeapon;
+    public UnityEvent<Weapon> OnEquipWeapon;
+    public UnityEvent<Weapon> OnAttack;
 
     protected Weapon equippedWeapon;
     Player _player;
@@ -42,8 +45,10 @@ public class WeaponController : MonoBehaviour
                     args.Attacker = _player;
                     args.Origin = ray.origin;
                     args.Direction = ray.direction;
+                    args.Defender = null;
                     
-                    equippedWeapon.NormalAttack(args);
+                    if(equippedWeapon.NormalAttack(args)
+                        && OnAttack != null) OnAttack.Invoke(equippedWeapon);
                 }
                 break;
             case Player.ViewMode.TOPDOWN:
@@ -65,7 +70,9 @@ public class WeaponController : MonoBehaviour
                         args.Attacker = _player;
                         args.Origin = _player.transform.position;   //플레이어 위치를 시작점으로
                         args.Direction = direction;
-                        equippedWeapon.NormalAttack(args);
+                        args.Defender = null;
+                        if (equippedWeapon.NormalAttack(args)
+                        && OnAttack != null) OnAttack.Invoke(equippedWeapon);
                     }
                 }
                 break;
@@ -75,10 +82,14 @@ public class WeaponController : MonoBehaviour
 
         
     }
-
     public void EquipWeapon(Weapon weapon)
     {
-        if (equippedWeapon) Destroy(equippedWeapon.gameObject);
+        if (equippedWeapon)
+        {
+            _player.Atk -= equippedWeapon.Atk;
+            Destroy(equippedWeapon.gameObject);
+        }
+
 
         //weapon의 타입에 따라 장착 위치가 다름.
         switch (weapon.Type)
@@ -91,6 +102,7 @@ public class WeaponController : MonoBehaviour
             default:
                 break;
         }
+        OnEquipWeapon.Invoke(equippedWeapon);
     }
 
     public void OnViewModeChanged(ModeSwitcher.ViewModeChangedArgs args)

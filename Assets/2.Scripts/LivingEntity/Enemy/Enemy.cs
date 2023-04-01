@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : LivingEntity
 {
     public Projectile Projectile;
 
+
     const float cDistance = 5f;         // 최소 유지거리
     const float cAttackDistance = 10f;   // 공격을 시작하는 거리
     const float cAttackCooltime = 1f;
 
+    Material _material;
+    Color _defaultColor;
     NavMeshAgent _pathFinder;
     Transform _target;
     Stat _stat;
     private void Awake()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player) _target = player.transform;
         _pathFinder = GetComponent<NavMeshAgent>();
-        _target = GameObject.FindGameObjectWithTag("Player").transform;
+
         _pathFinder.speed = Speed;
         _pathFinder.stoppingDistance = cDistance;
         _stat = Stat.Moving;
+        _material = GetComponent<MeshRenderer>().material;
+        _defaultColor = _material.color;
     }
     public override void Start()
     {
@@ -60,8 +68,8 @@ public class Enemy : LivingEntity
                 _stat = Stat.Attacking;
                 //플레이어에게 투사체 날리기
                 Vector3 position = new Vector3(transform.position.x, _target.position.y, transform.position.z);
-                Instantiate(Projectile, position, transform.rotation);
-
+                Projectile projectile = Instantiate(Projectile, position, transform.rotation);
+                projectile.Attacker = this;
                 _stat = Stat.Moving;
                 yield return new WaitForSeconds(cAttackCooltime);
             }
@@ -69,7 +77,23 @@ public class Enemy : LivingEntity
 
         }
     }
-
+    public override void TakeHit(int damage, AttackArgs attackArgs)
+    {
+        StartCoroutine(HitEffect());
+        base.TakeHit(damage, attackArgs);
+    }
+    IEnumerator HitEffect()
+    {
+        _material.color = Color.red;
+        float duration = 0.01f;
+        while (duration > 0)
+        {
+            duration -= Time.deltaTime;
+            yield return null;
+            
+        }
+        _material.color = _defaultColor;
+    }
 
     enum Stat
     {

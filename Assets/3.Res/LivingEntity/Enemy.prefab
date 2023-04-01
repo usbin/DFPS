@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6313916741744359906}
-  - component: {fileID: 6313916741744359909}
-  - component: {fileID: 6313916741744359908}
-  - component: {fileID: 6313916741744359911}
+  - component: {fileID: 8193693088573754924}
+  - component: {fileID: 8916908356604331886}
+  - component: {fileID: 4274352037142867902}
   - component: {fileID: 6313916741744359910}
   - component: {fileID: 8292703372782162077}
   m_Layer: 8
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6313916741744359909
+--- !u!33 &8193693088573754924
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6313916741744359929}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6313916741744359908
+--- !u!23 &8916908356604331886
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6313916741744359911
+--- !u!136 &4274352037142867902
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26c58b351758b704ab8fb9a0da4138e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeathEffector: {fileID: 5853936911811432836, guid: 1896c6c84e467ea49a59591682f42b3f, type: 3}
   DropItems:
   - {fileID: 2306347196764769235, guid: 5e01321722cf0124eb3ca40fb9e12bc3, type: 3}
   MaxHp: 5

@@ -103,7 +103,7 @@ public class PlayerControl_FirstPerson : BasePlayerControl
                             Rotate(theta);
                         }*/
 
-            Vector3 lookDeltaDegree = new Vector3(-lookInputDelta.y, lookInputDelta.x, 0)*0.1f;
+            Vector3 lookDeltaDegree = new Vector3(-lookInputDelta.y, lookInputDelta.x, 0)*0.5f;
 
             Rotate(lookDeltaDegree);
         }

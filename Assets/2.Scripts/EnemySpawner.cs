@@ -12,7 +12,12 @@ public class EnemySpawner : MonoBehaviour
     int _deadEnemyInWave;       //이번 웨이브에 죽은 적 수
     float _remainSpawnCooltime; // 스폰 주기
     const float cSpawnCooltime = 0.5f;       // 다음 스폰까지 남은 시간
+    ParticleSystem _enemyDeathEffector;
 
+    private void Awake()
+    {
+        _enemyDeathEffector = GetComponent<ParticleSystem>();
+    }
 
     private void Start()
     {
@@ -75,6 +80,7 @@ public class EnemySpawner : MonoBehaviour
             enemy.Speed = currentWaveData.Speed;
             enemy.MaxHp = currentWaveData.maxHp;
             enemy.OnDeath += OnEnemyDeath;
+            enemy.DeathEffector = _enemyDeathEffector;
 
             _remainEnemyToSpawn--;
         }

@@ -10,6 +10,6 @@ public abstract class Weapon : MonoBehaviour
         Gun
     }
     public WeaponType Type;
-    public float Atk;
-    public abstract void NormalAttack(AttackArgs args);
+    public int Atk;
+    public abstract bool NormalAttack(AttackArgs args);
 }

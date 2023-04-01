@@ -48,7 +48,7 @@ MonoBehaviour:
   Type: 0
   Atk: 1
   Muzzle: {fileID: 8380688346722322165}
-  ShootTerm: 0.2
+  ShootTerm: 1
   Layermask:
     serializedVersion: 2
     m_Bits: 256

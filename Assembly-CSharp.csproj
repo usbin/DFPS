@@ -63,7 +63,6 @@
     <Compile Include="Assets\2.Scripts\LivingEntity\ICombatable.cs" />
     <Compile Include="Assets\2.Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\2.Scripts\ModeSwitcher.cs" />
-    <Compile Include="Assets\2.Scripts\LivingEntity\IDamagable.cs" />
     <Compile Include="Assets\2.Scripts\Item\Effect\BaseEffector.cs" />
     <Compile Include="Assets\2.Scripts\LivingEntity\Player\PlayerEffectController.cs" />
     <Compile Include="Assets\2.Scripts\LivingEntity\Enemy\Enemy.cs" />
@@ -72,14 +71,15 @@
     <Compile Include="Assets\2.Scripts\LivingEntity\Player\PlayerControl_Topdown.cs" />
     <Compile Include="Assets\2.Scripts\Item\Item.cs" />
     <Compile Include="Assets\2.Scripts\Weapon\Gun.cs" />
+    <Compile Include="Assets\2.Scripts\Static\Structs.cs" />
     <Compile Include="Assets\2.Scripts\Item\Effect\AppleEffector.cs" />
     <Compile Include="Assets\2.Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\2.Scripts\LivingEntity\Player\Player.cs" />
     <Compile Include="Assets\2.Scripts\LivingEntity\LivingEntity.cs" />
+    <Compile Include="Assets\2.Scripts\LivingEntity\Enemy\Projectile.cs" />
     <Compile Include="Assets\2.Scripts\Static\CombatSystem.cs" />
     <Compile Include="Assets\2.Scripts\LivingEntity\Player\WeaponController.cs" />
-    <Compile Include="Assets\2.Scripts\LivingEntity\Enemy\Projectile.cs" />
-    <Compile Include="Assets\2.Scripts\Static\Structs.cs" />
+    <Compile Include="Assets\2.Scripts\UiController.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
