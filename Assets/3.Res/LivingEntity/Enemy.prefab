@@ -115,6 +115,7 @@ MonoBehaviour:
   - {fileID: 2306347196764769235, guid: 5e01321722cf0124eb3ca40fb9e12bc3, type: 3}
   MaxHp: 5
   Speed: 5
+  Distance: 0
   <Atk>k__BackingField: 1
   <AtkSpeed>k__BackingField: 0
   <Def>k__BackingField: 0

@@ -5,17 +5,17 @@ using UnityEngine;
 /// <summary>
 /// 플레이어에게 닿으면 추가됨.
 /// </summary>
-[RequireComponent(typeof(Item))]
+[RequireComponent(typeof(BaseItem))]
 public class ItemOnField : MonoBehaviour
 {
-    Item _item;
+    BaseItem _item;
     bool _picked = false;
-    PlayerEffectController _pickingPlayerEffectController;
+    PlayerBuffController _pickingPlayerEffectController;
     readonly float cGravitySqrt = Mathf.Sqrt(-1*Physics.gravity.y);
 
     private void Awake()
     {
-        _item = GetComponent<Item>();
+        _item = GetComponent<BaseItem>();
     }
     private void Start()
     {
@@ -49,7 +49,7 @@ public class ItemOnField : MonoBehaviour
     {
         if (!_picked && collision.gameObject.tag == "Player")
         {
-            PlayerEffectController controller = collision.gameObject.GetComponent<PlayerEffectController>();
+            PlayerBuffController controller = collision.gameObject.GetComponent<PlayerBuffController>();
             if (controller)
             {
                 _picked = true;
@@ -62,7 +62,7 @@ public class ItemOnField : MonoBehaviour
     {
         if (_picked)
         {
-            _pickingPlayerEffectController.Affect(_item.ItemData.Effecter);
+            _pickingPlayerEffectController.Affect(_item.Buff);
             Destroy(gameObject);
         }
     }

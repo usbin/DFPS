@@ -41,11 +41,11 @@ public class WeaponController : MonoBehaviour
                     //1인칭일 때
                     //: 카메라의 마우스 위치로 검출.
                     Ray ray = _player.ViewCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                    AttackArgs args;
+                    
+                    WeaponAttackArgs args;
                     args.Attacker = _player;
                     args.Origin = ray.origin;
                     args.Direction = ray.direction;
-                    args.Defender = null;
                     
                     if(equippedWeapon.NormalAttack(args)
                         && OnAttack != null) OnAttack.Invoke(equippedWeapon);
@@ -66,11 +66,10 @@ public class WeaponController : MonoBehaviour
                         Vector3 direction = point - ray.origin;
                         direction.y = 0;
 
-                        AttackArgs args;
+                        WeaponAttackArgs args;
                         args.Attacker = _player;
                         args.Origin = _player.transform.position;   //플레이어 위치를 시작점으로
                         args.Direction = direction;
-                        args.Defender = null;
                         if (equippedWeapon.NormalAttack(args)
                         && OnAttack != null) OnAttack.Invoke(equippedWeapon);
                     }

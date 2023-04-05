@@ -9,59 +9,37 @@ public class Gun : Weapon
     public LayerMask Layermask;
     public float Distance;
     public LineRenderer LineRenderer;
+    public Skill_GunShooting ShootingPrefab;
 
-    float _remainShootTerm;
+    float _nextShootTime;
+    CombatSystem _combatSystem;
+
     private void Awake()
     {
+        _combatSystem = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<CombatSystem>();
     }
     public void Update()
     {
-        _remainShootTerm -= Time.deltaTime;
     }
-    public override bool NormalAttack(AttackArgs args)
+    public override bool NormalAttack(WeaponAttackArgs args)
     {
         
-        if (_remainShootTerm <= 0)
+        if (_nextShootTime <= Time.time)
         {
-            Ray ray = new Ray(args.Origin, args.Direction);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Distance))
-            {
-                ICombatable combatable = hit.collider.GetComponent<ICombatable>();
-                if(combatable != null)
-                {
-                    Vector3 point = hit.point;
-                    Debug.DrawRay(ray.origin, point - ray.origin);
-                    //attacker의 스탯과 무기 damage를 계산
-                    float totalDamage = CombatSystem.CalculateInflictedDamage(args.Attacker.Atk + Atk, combatable.Def);
-                    combatable.TakeHit((int)totalDamage, args);
-                    if (LineRenderer)
-                    {
-                        StartCoroutine(ShootLine(transform.position, point));
-                    }
-                }
-            }
+            SkillArgs shootArgs;
+            shootArgs.Caster = args.Attacker;
+            shootArgs.Weapon = this;
+            shootArgs.Origin = args.Origin;
+            shootArgs.Direction = args.Direction;
 
+            _combatSystem.ExecuteSkill(ShootingPrefab, shootArgs);
 
             //무기의 발사텀/(1+AtkSpeed*0.1) = 실제 발사텀
-            _remainShootTerm = ShootTerm/(1f+args.Attacker.AtkSpeed*0.1f);
+            _nextShootTime = Time.time + ShootTerm/(1f+args.Attacker.AtkSpeed*0.1f);
             return true;
 
         }
         else return false;
     }
-    IEnumerator ShootLine(Vector3 origin, Vector3 destination)
-    {
-        LineRenderer.enabled = true;
-        LineRenderer.SetPosition(0, origin);
-        LineRenderer.SetPosition(1, destination);
-        float duration = 0.02f;
-        while (duration > 0)
-        {
-            duration -= Time.deltaTime;
-            yield return null;
-
-        }
-        LineRenderer.enabled = false;
-    }
+    
 }

@@ -33,7 +33,7 @@ public class PlayerControl_Topdown : BasePlayerControl
         // ray로 충돌검사
         Ray moveRay = new Ray(player.transform.position, movement.normalized);
         RaycastHit hit;
-        LayerMask layerMask = LayerMask.NameToLayer("Item");
+        LayerMask layerMask = 1<<LayerMask.NameToLayer("Item");
 
         if(!Physics.Raycast(moveRay,out hit, 1, ~layerMask, QueryTriggerInteraction.Ignore))
         {

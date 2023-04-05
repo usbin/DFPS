@@ -76,10 +76,10 @@ public class Enemy : LivingEntity
 
         }
     }
-    public override void TakeHit(int damage, AttackArgs attackArgs)
+    public override void TakeHit(int damage)
     {
         StartCoroutine(HitEffect());
-        base.TakeHit(damage, attackArgs);
+        base.TakeHit(damage);
     }
     IEnumerator HitEffect()
     {

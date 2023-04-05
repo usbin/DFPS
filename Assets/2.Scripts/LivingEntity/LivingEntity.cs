@@ -7,13 +7,23 @@ public class LivingEntity : MonoBehaviour, ICombatable
     public event System.Action<LivingEntity> OnDeath;
     public ParticleSystem DeathEffector;
 
-    public Item[] DropItems;
+    public BaseItem[] DropItems;
     public int MaxHp;
     public int Speed;
+    public int Distance;//사정거리
     public int Hp { get => hp;}
     protected int hp;
     protected bool dead = false;
+    public bool Dead { get => dead; }
 
+    public GameObject GameObject
+    {
+        get
+        {
+            if (!dead) return gameObject;
+            else return null;
+        }
+    }
     [field:SerializeField]
     public int Atk { get; set; }
     [field: SerializeField]
@@ -39,7 +49,7 @@ public class LivingEntity : MonoBehaviour, ICombatable
         if (DropItems.Length > 0)
         {
             int randomIndex = Random.Range(0, DropItems.Length);
-            Item item = Instantiate(DropItems[randomIndex]);
+            BaseItem item = Instantiate(DropItems[randomIndex]);
             item.transform.position = transform.position;
         }
 
@@ -73,15 +83,23 @@ public class LivingEntity : MonoBehaviour, ICombatable
 
     
 
-    public virtual void TakeHit(int damage, AttackArgs attackArgs)
+    public virtual void TakeHit(int damage)
     {
-
-        
-
+        Mathf.Max(damage, 0);
         hp -= damage;
+        
         if (hp <= 0 && !dead)
         {
             Die();
+        }
+    }
+    public virtual void Recover(int amount)
+    {
+        Mathf.Max(amount, 0);
+        hp += amount;
+        if (hp > MaxHp)
+        {
+            hp = MaxHp;
         }
     }
 

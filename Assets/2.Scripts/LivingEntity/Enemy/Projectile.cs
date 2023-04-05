@@ -36,13 +36,8 @@ public class Projectile : MonoBehaviour
             _target = hit.collider.GetComponent<Player>();
             if(_target != null)
             {
-                AttackArgs args;
-                args.Attacker = Attacker;
-                args.Defender = _target;
-                args.Direction = ray.direction;
-                args.Origin = ray.origin;
                 float damage = CombatSystem.CalculateInflictedDamage(Atk + Attacker.Atk, _target.Def);
-                _target.TakeHit((int)damage, args);
+                _target.TakeHit((int)damage);
                 Destroy(gameObject);
             }
             else
