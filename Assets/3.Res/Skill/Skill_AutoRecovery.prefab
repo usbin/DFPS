@@ -44,4 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillName: "\uC790\uB3D9\uD68C\uBCF5"
-  buff: {fileID: 7708388522636285892, guid: c9cf4da335d688844ae65e00f731d5db, type: 3}
+  SkillDescription: "\uC77C\uC815 \uC2DC\uAC04\uB9C8\uB2E4 \uC790\uB3D9\uC73C\uB85C
+    \uD68C\uBCF5\uD569\uB2C8\uB2E4.(\uD328\uC2DC\uBE0C)"
+  SkillImage: {fileID: 21300000, guid: 5d4f7f8c18c81b14499cfb251e39af08, type: 3}
+  Cooltime: 0
+  RemainCooltime: 0

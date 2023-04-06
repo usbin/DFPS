@@ -10,7 +10,7 @@ public class Skill_MultipleShot : BaseSkill
     public BaseSkill[] TriggerList;//선행 스킬 목록
     public ParticleSystem EffectorPrefab;
 
-    public override SetupHandler OnSetup => (LivingEntity owner, SkillManager skillExecutor) =>
+    protected override SetupHandler OnSetup => (LivingEntity owner, SkillManager skillExecutor) =>
     {
         foreach(BaseSkill skill in TriggerList)
         {
@@ -18,13 +18,13 @@ public class Skill_MultipleShot : BaseSkill
         }
     };
 
-    public override SetdownHandler OnSetdown => (LivingEntity owner, SkillManager skillExecutor) =>
+    protected override SetdownHandler OnSetdown => (LivingEntity owner, SkillManager skillExecutor) =>
     {
         skillExecutor.RemoveTriggeredSkill(this);
     };
-    public override ExecuteHandler OnExecute => null;
+    protected override ExecuteHandler OnExecute => null;
 
-    public override TriggerHandler OnTriggered => Execute;
+    protected override TriggerHandler OnTriggered => Execute;
 
     IEnumerator Execute(SkillArgs args, SkillResult result, SkillManager skillManager)
     {

@@ -56,7 +56,21 @@ MonoBehaviour:
     maxHp: 5
   - EnemySpecies:
     - {fileID: 6313916741744359910, guid: 4fcc4f3d0717f31479af614743417979, type: 3}
-    EnemyAmount: 16
+    EnemyAmount: 1
+    Atk: 2
+    Def: 0
+    Speed: 1
+    maxHp: 10
+  - EnemySpecies:
+    - {fileID: 6313916741744359910, guid: 4fcc4f3d0717f31479af614743417979, type: 3}
+    EnemyAmount: 1
+    Atk: 2
+    Def: 0
+    Speed: 1
+    maxHp: 10
+  - EnemySpecies:
+    - {fileID: 6313916741744359910, guid: 4fcc4f3d0717f31479af614743417979, type: 3}
+    EnemyAmount: 20
     Atk: 2
     Def: 0
     Speed: 1
@@ -4918,5 +4932,5 @@ MonoBehaviour:
   - {fileID: 7564677251583149912, guid: fe95b3df0d3c05844b8ac6415cedecb7, type: 3}
   ThirdRewardSkills:
   - {fileID: 3006447792311616969, guid: f4db661ec97a6864baa9c8e38bcc7d5a, type: 3}
-  - {fileID: 1235171686846941818, guid: 51d6191f359464342a76ffd4d5788d2b, type: 3}
+  - {fileID: 4076614817770998002, guid: 1b9b0f0f2ed259141b96384383d4966f, type: 3}
   - {fileID: 6009744734791740364, guid: 9eda73108904e0c40a13f22349316261, type: 3}

@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public event System.Action<int> OnNextWave;
-    
+    public int FinalWave => Waves.Length;
+    public event System.Action<int> OnWaveStart;
+    public event System.Action<int> OnWaveEnd;
+    public UiController UiController;
 
     public Wave[] Waves;        //***웨이브: 인덱스 0부터 저장
     public CapsuleCollider SpawnArea;  //스폰할 지역
+
+    bool _isCleared = false;
 
     int _currentWave = 0;       //***현재 웨이브: 인덱스 1부터 셈.
     int _remainEnemyToSpawn;    //이번 웨이브에 스폰해야 할 적 수
     int _deadEnemyInWave;       //이번 웨이브에 죽은 적 수
     float _remainSpawnCooltime; // 스폰 주기
     const float cSpawnCooltime = 0.5f;       // 다음 스폰까지 남은 시간
-    ParticleSystem _enemyDeathEffector;
-
     private void Awake()
     {
-        _enemyDeathEffector = GetComponent<ParticleSystem>();
     }
 
     private void Start()
@@ -40,18 +41,29 @@ public class EnemySpawner : MonoBehaviour
         }
 
         //적을 모두 스폰했고 이번 웨이브에 죽은 적이 소환한 적 수와 같다면 => 다음 웨이브
-        if (Waves.Length > _currentWave)
+        if(_currentWave == 0)
         {
-            if (_remainEnemyToSpawn == 0 && _deadEnemyInWave == Waves[_currentWave - 1].EnemyAmount)
+            NextWave();
+        }
+        else if ( _remainEnemyToSpawn == 0 && _deadEnemyInWave == Waves[_currentWave - 1].EnemyAmount)
+        {
+            if (FinalWave > _currentWave)
             {
+                if (OnWaveEnd != null) OnWaveEnd.Invoke(_currentWave);
                 NextWave();
             }
+            else if(_currentWave == FinalWave && !_isCleared)
+            {
+                _isCleared = true;
+                if (OnWaveEnd != null) OnWaveEnd.Invoke(_currentWave);
+            }
         }
+        
     }
     public void NextWave()
     {
         _currentWave++;
-        OnNextWave.Invoke(_currentWave);
+        if(OnWaveStart != null) OnWaveStart.Invoke(_currentWave);
         Debug.Log("웨이브" + _currentWave + " 시작");
         _remainEnemyToSpawn = Waves[_currentWave - 1].EnemyAmount;
         _deadEnemyInWave = 0;
@@ -84,7 +96,7 @@ public class EnemySpawner : MonoBehaviour
             enemy.Speed = currentWaveData.Speed;
             enemy.MaxHp = currentWaveData.maxHp;
             enemy.OnDeath += OnEnemyDeath;
-            enemy.DeathEffector = _enemyDeathEffector;
+            enemy.OnEnemyHit += UiController.OnEnemyTakeHit;
 
             _remainEnemyToSpawn--;
         }

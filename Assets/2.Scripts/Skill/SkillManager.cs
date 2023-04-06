@@ -33,6 +33,16 @@ public abstract partial class BaseSkill : MonoBehaviour
             }
 
         }
+        public void OnSetupSkill(BaseSkill skill, LivingEntity owner)
+        {
+            if(skill.OnSetup != null)
+                skill.OnSetup(owner, this);
+        }
+        public void OnSetdownSkill(BaseSkill skill, LivingEntity owner)
+        {
+            if (skill.OnSetdown != null)
+                skill.OnSetdown(owner, this);
+        }
         public IEnumerator ExecuteSkill(BaseSkill skill, SkillArgs args, SkillManager skillManager)
         {
             if(skill.OnExecute != null)

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Skill_GunShooting : BaseSkill
 {
-    public override SetupHandler OnSetup => null;
+    protected override SetupHandler OnSetup => null;
 
-    public override SetdownHandler OnSetdown => null;
+    protected override SetdownHandler OnSetdown => null;
 
-    public override ExecuteHandler OnExecute => Execute;
+    protected override ExecuteHandler OnExecute => Execute;
 
-    public override TriggerHandler OnTriggered => null;
+    protected override TriggerHandler OnTriggered => null;
 
 
     IEnumerator Execute(SkillArgs args, SkillManager skillManager)

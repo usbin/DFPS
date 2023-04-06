@@ -21,18 +21,18 @@ public class Gun : Weapon
     public void Update()
     {
     }
-    public override bool NormalAttack(WeaponAttackArgs args)
+    public override bool NormalAttack(LivingEntity owner, AttackArgs args)
     {
         
         if (_nextShootTime <= Time.time)
         {
             SkillArgs shootArgs;
             shootArgs.Caster = args.Attacker;
-            shootArgs.Weapon = this;
             shootArgs.Origin = args.Origin;
             shootArgs.Direction = args.Direction;
+            shootArgs.Weapon = this;
 
-            _combatSystem.ExecuteSkill(ShootingPrefab, shootArgs);
+            owner.ExecuteSkill(ShootingPrefab, shootArgs);
 
             //무기의 발사텀/(1+AtkSpeed*0.1) = 실제 발사텀
             _nextShootTime = Time.time + ShootTerm/(1f+args.Attacker.AtkSpeed*0.1f);

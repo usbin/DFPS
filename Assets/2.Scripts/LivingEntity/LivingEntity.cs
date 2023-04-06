@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LivingEntity : MonoBehaviour, ICombatable
+public abstract class LivingEntity : MonoBehaviour, ICombatable
 {
     public event System.Action<LivingEntity> OnDeath;
     public ParticleSystem DeathEffector;
+    
 
     public BaseItem[] DropItems;
     public int MaxHp;
@@ -39,6 +40,8 @@ public class LivingEntity : MonoBehaviour, ICombatable
     {
         if (transform.position.y < -10) Die();
     }
+    public abstract void ExecuteSkill(BaseSkill skill, SkillArgs args);
+
     public virtual void Die()
     {
         dead = true;
@@ -60,7 +63,6 @@ public class LivingEntity : MonoBehaviour, ICombatable
         //사망 애니메이션
         if (DeathEffector != null)
         {
-            
             StartCoroutine(DeathEffect(DeathEffector));
         }
         else Destroy(gameObject);
@@ -80,8 +82,6 @@ public class LivingEntity : MonoBehaviour, ICombatable
 
         Destroy(gameObject);
     }
-
-    
 
     public virtual void TakeHit(int damage)
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PlayerBuffController : MonoBehaviour
 {
+    public BaseBuff[] AllActiveBuff => _buffes.ToArray();
     Player _player;
     // 현재 플레이어에게 적용된 이펙트들
     List<BaseBuff> _buffes = new List<BaseBuff>();

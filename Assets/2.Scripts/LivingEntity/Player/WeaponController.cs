@@ -42,12 +42,12 @@ public class WeaponController : MonoBehaviour
                     //: 카메라의 마우스 위치로 검출.
                     Ray ray = _player.ViewCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
                     
-                    WeaponAttackArgs args;
+                    AttackArgs args;
                     args.Attacker = _player;
                     args.Origin = ray.origin;
                     args.Direction = ray.direction;
                     
-                    if(equippedWeapon.NormalAttack(args)
+                    if(equippedWeapon.NormalAttack(_player, args)
                         && OnAttack != null) OnAttack.Invoke(equippedWeapon);
                 }
                 break;
@@ -59,18 +59,19 @@ public class WeaponController : MonoBehaviour
                     //마우스 포지션으로 쏘기
                     Ray ray = _player.ViewCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
                     Plane plane = new Plane(Vector3.up, Vector3.zero);
+                    Debug.DrawRay(ray.origin, ray.direction);
                     float distance;
                     if (plane.Raycast(ray, out distance))
                     {
                         Vector3 point = ray.GetPoint(distance);
-                        Vector3 direction = point - ray.origin;
+                        Vector3 direction = point - _player.transform.position ;
                         direction.y = 0;
 
-                        WeaponAttackArgs args;
+                        AttackArgs args;
                         args.Attacker = _player;
                         args.Origin = _player.transform.position;   //플레이어 위치를 시작점으로
                         args.Direction = direction;
-                        if (equippedWeapon.NormalAttack(args)
+                        if (equippedWeapon.NormalAttack(_player, args)
                         && OnAttack != null) OnAttack.Invoke(equippedWeapon);
                     }
                 }
@@ -97,6 +98,7 @@ public class WeaponController : MonoBehaviour
                 equippedWeapon = Instantiate(weapon, GunHold.position, GunHold.rotation);
                 equippedWeapon.gameObject.layer = GunHold.gameObject.layer;
                 equippedWeapon.transform.parent = GunHold;
+                _player.Atk += equippedWeapon.Atk;
                 break;
             default:
                 break;

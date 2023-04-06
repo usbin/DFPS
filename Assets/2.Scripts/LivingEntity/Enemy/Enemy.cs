@@ -7,8 +7,9 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : LivingEntity
 {
+    public event System.Action<Enemy, int> OnEnemyHit;
     public Projectile Projectile;
-
+    public DamageEffect DamageEffect;
 
     const float cDistance = 5f;         // 최소 유지거리
     const float cAttackDistance = 10f;   // 공격을 시작하는 거리
@@ -78,6 +79,8 @@ public class Enemy : LivingEntity
     }
     public override void TakeHit(int damage)
     {
+        if(OnEnemyHit != null)
+            OnEnemyHit(this, damage);
         StartCoroutine(HitEffect());
         base.TakeHit(damage);
     }
@@ -92,6 +95,11 @@ public class Enemy : LivingEntity
             
         }
         _material.color = _defaultColor;
+    }
+
+    public override void ExecuteSkill(BaseSkill skill, SkillArgs args)
+    {
+        //적 스킬은 아직 구현x
     }
 
     enum Stat

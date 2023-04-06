@@ -8,23 +8,31 @@ public class Skill_ForwardAttack : BaseSkill
     const float s_zDistance = 3f;       //전방 공격 길이
     const float s_duration = 2f;        //지속시간
     const float s_damageTerm = 0.1f;    //데미지를 주는 텀
-    const float s_cooltime = 2f;        //스킬 쿨타임
-    float _nextCastTime;                //시전가능한 다음 시간
+
     public ParticleSystem EffectorPrefab;
 
-    public override SetupHandler OnSetup => null;
+    protected override SetupHandler OnSetup => null;
 
-    public override SetdownHandler OnSetdown => null;
+    protected override SetdownHandler OnSetdown => null;
 
-    public override ExecuteHandler OnExecute => Execute;
+    protected override ExecuteHandler OnExecute => Execute;
 
-    public override TriggerHandler OnTriggered => null;
+    protected override TriggerHandler OnTriggered => null;
 
+    private void Update()
+    {
+        //화면에 표시하기 위한 쿨타임
+        if (RemainCooltime > 0)
+        {
+            RemainCooltime -= Time.deltaTime;
+        }
+    }
 
     IEnumerator Execute(SkillArgs args, SkillManager skillManager)
     {
-        if (_nextCastTime <= Time.time)
+        if (RemainCooltime <= 0)
         {
+            RemainCooltime = Cooltime;
             //이펙트
             if (EffectorPrefab)
             {
@@ -33,6 +41,7 @@ public class Skill_ForwardAttack : BaseSkill
                 effector.transform.SetParent(args.Caster.transform, false);
                 effector.Play();
             }
+
 
             SkillResult result = new SkillResult();
             result.AttackResults = new List<AttackResult>();
@@ -73,7 +82,6 @@ public class Skill_ForwardAttack : BaseSkill
                     }
                     remainTerm = s_damageTerm;
                     //쿨타임 세팅
-                    _nextCastTime = Time.time + s_cooltime;
 
 
                 }

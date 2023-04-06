@@ -11,17 +11,17 @@ public class Skill_HpDamage : BaseSkill
     };
 
 
-    public override SetupHandler OnSetup => (LivingEntity caster, SkillManager skillManager) =>
+    protected override SetupHandler OnSetup => (LivingEntity caster, SkillManager skillManager) =>
     {
         skillManager.OnAttack += _onAttack;
     };
 
-    public override SetdownHandler OnSetdown => (LivingEntity caster, SkillManager skillManager) =>
+    protected override SetdownHandler OnSetdown => (LivingEntity caster, SkillManager skillManager) =>
     {
         skillManager.OnAttack -= _onAttack;
     };
 
-    public override ExecuteHandler OnExecute => null;
+    protected override ExecuteHandler OnExecute => null;
 
-    public override TriggerHandler OnTriggered => null;
+    protected override TriggerHandler OnTriggered => null;
 }

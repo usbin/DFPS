@@ -5,16 +5,24 @@ using UnityEngine;
 public class Skill_AroundAttack : BaseSkill
 {
     public ParticleSystem EffectorPrefab;
-
-    public override SetupHandler OnSetup => null;
-    public override SetdownHandler OnSetdown => null;
-    public override ExecuteHandler OnExecute => Execute;
-    public override TriggerHandler OnTriggered => null;
+    protected override SetupHandler OnSetup => null;
+    protected override SetdownHandler OnSetdown => null;
+    protected override ExecuteHandler OnExecute => Execute;
+    protected override TriggerHandler OnTriggered => null;
 
     const float s_duration = 2f;        //지속시간
     const float s_damageTerm = 0.1f;    //데미지 주는 텀
-    const float s_cooltime = 2f;        //쿨타임
-    float _nextCastTime;                //시전 가능한 다음 시간
+
+
+    
+    private void Update()
+    {
+        //화면에 표시하기 위한 쿨타임
+        if (RemainCooltime > 0)
+        {
+            RemainCooltime -= Time.deltaTime;
+        }
+    }
 
     IEnumerator Execute(SkillArgs args, SkillManager skillManager)
     {
@@ -25,8 +33,9 @@ public class Skill_AroundAttack : BaseSkill
 
         LivingEntity caster = args.Caster;
 
-        if (_nextCastTime <= Time.time)
+        if (RemainCooltime <= 0)
         {
+            RemainCooltime = Cooltime;
             //이펙트
             if (EffectorPrefab)
             {
@@ -63,10 +72,7 @@ public class Skill_AroundAttack : BaseSkill
                         result.AttackResults.Add(atkResult);
                     }
 
-
-                    
                     remainTerm = s_damageTerm;
-                    _nextCastTime = Time.time + s_cooltime;
                 }
                 remainDuration -= Time.deltaTime;
                 remainTerm -= Time.deltaTime;

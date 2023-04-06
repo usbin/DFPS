@@ -11,10 +11,10 @@ public abstract class Weapon : MonoBehaviour
     }
     public WeaponType Type;
     public int Atk;
-    public abstract bool NormalAttack(WeaponAttackArgs args);
+    public abstract bool NormalAttack(LivingEntity owner, AttackArgs args);
 }
 
-public struct WeaponAttackArgs
+public struct AttackArgs
 {
     public LivingEntity Attacker;
     public Vector3 Origin;

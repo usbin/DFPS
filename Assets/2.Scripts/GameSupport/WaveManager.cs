@@ -18,72 +18,75 @@ public class WaveManager : MonoBehaviour
     private void Awake()
     {
 
-        EnemySpawner.OnNextWave += OnNextWave;
+        EnemySpawner.OnWaveEnd += OnWaveEnd;
     }
 
-    void OnNextWave(int wave)
+    void OnWaveEnd(int wave)
     {
-        //2웨이브에 스킬 선택
-        if (wave == 2)
+        //1웨이브 끝나면 스킬 선택
+        if (wave == 1)
         {
-            PlayerSkillController playerSkillController;
+            Player player;
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj)
             {
-                if (playerObj.TryGetComponent(out playerSkillController))
+                if (playerObj.TryGetComponent(out player))
                 {
                     SkillSelectionUi ui = Instantiate(WaveSkillSelectionUi);
                     ui.Init(
+                        "Q 스킬을 선택하세요.",
                     ModeSwitcher,
-                    FirstRewardSkills[0].SkillName,
+                    FirstRewardSkills[0],
                     () =>
                     {
-                        playerSkillController.SetupSkill(FirstRewardSkills[0], "Q");
+
+                        player.SetupSkill(FirstRewardSkills[0], "Q");
                     },
 
-                    FirstRewardSkills[1].SkillName,
+                    FirstRewardSkills[1],
                     () =>
                     {
-                        playerSkillController.SetupSkill(FirstRewardSkills[1], "Q");
+                        player.SetupSkill(FirstRewardSkills[1], "Q");
                     },
 
-                    FirstRewardSkills[2].SkillName,
+                    FirstRewardSkills[2],
                     () =>
                     {
-                        playerSkillController.SetupSkill(FirstRewardSkills[2], "Q");
+                        player.SetupSkill(FirstRewardSkills[2], "Q");
                     });
                 }
             }
         }
 
         //3웨이브에 스킬 선택
-        if (wave == 3)
+        if (wave == 2)
         {
-            PlayerSkillController playerSkillController;
+            Player player;
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj)
             {
-                if (playerObj.TryGetComponent(out playerSkillController))
+                if (playerObj.TryGetComponent(out player))
                 {
                     SkillSelectionUi ui = Instantiate(WaveSkillSelectionUi);
                     ui.Init(
+                        "E 스킬을 선택하세요.",
                     ModeSwitcher,
-                    SecondRewardSkills[0].SkillName,
+                    SecondRewardSkills[0],
                     () =>
                     {
-                        playerSkillController.SetupSkill(SecondRewardSkills[0], "E");
+                        player.SetupSkill(SecondRewardSkills[0], "E");
                     },
 
-                    SecondRewardSkills[1].SkillName,
+                    SecondRewardSkills[1],
                     () =>
                     {
-                        playerSkillController.SetupSkill(SecondRewardSkills[1], "E");
+                        player.SetupSkill(SecondRewardSkills[1], "E");
                     },
 
-                    SecondRewardSkills[2].SkillName,
+                    SecondRewardSkills[2],
                     () =>
                     {
-                        playerSkillController.SetupSkill(SecondRewardSkills[2], "E");
+                        player.SetupSkill(SecondRewardSkills[2], "E");
                     });
                 }
             }
@@ -91,33 +94,34 @@ public class WaveManager : MonoBehaviour
 
 
         //4웨이브에 스킬 선택
-        if (wave == 4)
+        if (wave == 3)
         {
-            PlayerSkillController playerSkillController;
+            Player player;
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj)
             {
-                if (playerObj.TryGetComponent(out playerSkillController))
+                if (playerObj.TryGetComponent(out player))
                 {
                     SkillSelectionUi ui = Instantiate(WaveSkillSelectionUi);
                     ui.Init(
+                        "R 스킬을 선택하세요.",
                     ModeSwitcher,
-                    ThirdRewardSkills[0].SkillName,
+                    ThirdRewardSkills[0],
                     () =>
                     {
-                        playerSkillController.SetupSkill(ThirdRewardSkills[0], "R");
+                        player.SetupSkill(ThirdRewardSkills[0], "R");
                     },
 
-                    ThirdRewardSkills[1].SkillName,
+                    ThirdRewardSkills[1],
                     () =>
                     {
-                        playerSkillController.SetupSkill(ThirdRewardSkills[1], "R");
+                        player.SetupSkill(ThirdRewardSkills[1], "R");
                     },
 
-                    ThirdRewardSkills[2].SkillName,
+                    ThirdRewardSkills[2],
                     () =>
                     {
-                        playerSkillController.SetupSkill(ThirdRewardSkills[2], "R");
+                        player.SetupSkill(ThirdRewardSkills[2], "R");
                     });
                 }
             }

@@ -10,17 +10,17 @@ public class Skill_Vampiric : BaseSkill
     };
 
 
-    public override SetupHandler OnSetup => (LivingEntity owner, SkillManager skillManager) =>
+    protected override SetupHandler OnSetup => (LivingEntity owner, SkillManager skillManager) =>
     {
         skillManager.OnAttack += _onAttack;
     };
 
-    public override SetdownHandler OnSetdown => (LivingEntity owner, SkillManager skillManager) =>
+    protected override SetdownHandler OnSetdown => (LivingEntity owner, SkillManager skillManager) =>
     {
         skillManager.OnAttack -= _onAttack;
     };
 
-    public override ExecuteHandler OnExecute => throw new System.NotImplementedException();
+    protected override ExecuteHandler OnExecute => throw new System.NotImplementedException();
 
-    public override TriggerHandler OnTriggered => throw new System.NotImplementedException();
+    protected override TriggerHandler OnTriggered => throw new System.NotImplementedException();
 }

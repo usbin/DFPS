@@ -15,6 +15,9 @@ public class Apple : BaseItem
         bool _done = false;
 
         int _atkEffect = 1;
+
+        public override Sprite BuffImage => null;
+
         public override void StartBuff(Player owner)
         {
             owner.Atk += _atkEffect;

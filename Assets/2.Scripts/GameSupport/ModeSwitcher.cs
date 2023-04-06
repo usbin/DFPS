@@ -56,7 +56,10 @@ public class ModeSwitcher : MonoBehaviour
         if (_viewModeArgs.ViewCamera) _viewModeArgs.ViewCamera.gameObject.SetActive(false);
         if (_viewModeArgs.Canvas_OnPlaying) _viewModeArgs.Canvas_OnPlaying.gameObject.SetActive(false);
 
-
+        if(mode==Player.ViewMode.TOPDOWN)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
 
         _cameras[(int)mode].gameObject.SetActive(true);
         _canvases_onPlaying[(int)mode].gameObject.SetActive(!_uiMode);
@@ -66,19 +69,23 @@ public class ModeSwitcher : MonoBehaviour
         ViewModeChanged.Invoke(_viewModeArgs);
     }
     // 뷰모드 토글
-    public void ToggleViewMode()
+    public void ToggleViewMode(InputAction.CallbackContext context)
     {
-        switch (_viewModeArgs.ViewMode)
+        if (context.performed)
         {
-            case Player.ViewMode.FIRST_PERSON:
-                SetViewMode(Player.ViewMode.TOPDOWN);
-                break;
-            case Player.ViewMode.TOPDOWN:
-                SetViewMode(Player.ViewMode.FIRST_PERSON);
-                break;
-            default:
-                break;
+            switch (_viewModeArgs.ViewMode)
+            {
+                case Player.ViewMode.FIRST_PERSON:
+                    SetViewMode(Player.ViewMode.TOPDOWN);
+                    break;
+                case Player.ViewMode.TOPDOWN:
+                    SetViewMode(Player.ViewMode.FIRST_PERSON);
+                    break;
+                default:
+                    break;
+            }
         }
+        
     }
 
     // UiMode 변경

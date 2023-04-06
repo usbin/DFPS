@@ -6,8 +6,33 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Player))]
 public class PlayerSkillController : MonoBehaviour
 {
-    public CombatSystem CombatSystem;
+    public delegate void OnSkillChangedHandler(string key, BaseSkill skill);
+    public OnSkillChangedHandler OnSkillChanged;
     public Transform SkillBelt;
+    public BaseSkill QSkill
+    {
+        get
+        {
+            if (_mySkills.ContainsKey("Q")) return _mySkills["Q"];
+            else return null;
+        }
+    }
+    public BaseSkill ESkill
+    {
+        get
+        {
+            if (_mySkills.ContainsKey("E")) return _mySkills["E"];
+            else return null;
+        }
+    }
+    public BaseSkill RSkill
+    {
+        get
+        {
+            if (_mySkills.ContainsKey("R")) return _mySkills["R"];
+            else return null;
+        }
+    }
     Dictionary<string, BaseSkill> _mySkills = new Dictionary<string, BaseSkill>();
     Player _player;
     PlayerInput _input;
@@ -19,21 +44,27 @@ public class PlayerSkillController : MonoBehaviour
     }
 
     //스킬 습득 함수
-    public void SetupSkill(BaseSkill skill_, string key)
+    public void SetupSkill(BaseSkill.SkillManager skillManager, BaseSkill skill_, string key)
     {
         BaseSkill skill = Instantiate(skill_);
         skill.transform.SetParent(SkillBelt);
-        if(skill.OnSetup != null) skill.OnSetup(_player, CombatSystem.SkillExecutor);
+
+        skillManager.OnSetupSkill(skill_, _player);
+
         _mySkills.Add(key, skill);
+
+        if (OnSkillChanged != null) OnSkillChanged(key, skill_);
     }
     //스킬 습득 취소 함수
-    public void SetdownSkill(BaseSkill skill)
+    public void SetdownSkill(BaseSkill.SkillManager skillManager, BaseSkill skill)
     {
-        foreach(string key in _mySkills.Keys)
+        skillManager.OnSetdownSkill(skill, _player);
+        foreach (string key in _mySkills.Keys)
         {
             if (_mySkills[key] == skill)
             {
                 _mySkills.Remove(key);
+                if (OnSkillChanged != null) OnSkillChanged(key, null);
                 Destroy(skill.gameObject);
                 return;
             }
@@ -69,7 +100,7 @@ public class PlayerSkillController : MonoBehaviour
             args.Origin = _player.transform.position;
             args.Direction = _player.transform.forward;
             args.Weapon = null;
-            CombatSystem.Instance.ExecuteSkill(_mySkills[key], args);
+            _player.ExecuteSkill(_mySkills[key], args);
 
         }
     }

@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillName: "\uD504\uB808\uC2A4\uD1A0"
+  SkillDescription: "\uACF5\uACA9 \uC18D\uB3C4\uAC00 \uB300\uD3ED \uC99D\uAC00\uD569\uB2C8\uB2E4.(\uD328\uC2DC\uBE0C)"
+  SkillImage: {fileID: 21300000, guid: 0e7966e8857d9da42bd7ac9668f85ce2, type: 3}
+  Cooltime: 0
+  RemainCooltime: 0

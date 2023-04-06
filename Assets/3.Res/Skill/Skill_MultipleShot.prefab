@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillName: "\uBA40\uD2F0\uD50C \uC0F7"
+  SkillDescription: "\uD3C9\uD0C0\uAC00 \uAD11\uC5ED \uD3ED\uBC1C \uB370\uBBF8\uC9C0\uB97C
+    \uC90D\uB2C8\uB2E4.(\uD328\uC2DC\uBE0C)"
+  SkillImage: {fileID: 21300000, guid: 5834c9fbe449d4346b017dcbb7954c94, type: 3}
+  Cooltime: 0
+  RemainCooltime: 0
   TriggerList:
   - {fileID: 1235171686846941818, guid: 51d6191f359464342a76ffd4d5788d2b, type: 3}
-  Effector: {fileID: 9179054801859093382, guid: 288ddb3eb3291464891b91d1fd0a844e, type: 3}
+  EffectorPrefab: {fileID: 9179054801859093382, guid: 288ddb3eb3291464891b91d1fd0a844e, type: 3}
