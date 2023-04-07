@@ -10,9 +10,7 @@ public class Skill_Haste : BaseSkill
     protected override ExecuteHandler OnExecute => Execute;
     protected override TriggerHandler OnTriggered => null;
 
-    const float s_duration = 3f;    //지속시간
-
-
+    Buff_Haste buff;
 
     private void Update()
     {
@@ -32,20 +30,55 @@ public class Skill_Haste : BaseSkill
 
             if (caster != null && !caster.Dead)
             {
+                buff = new Buff_Haste(SkillImage);
                 RemainCooltime = Cooltime;
-                int originSpeed = caster.Speed;
-                caster.Speed += originSpeed;
-                float remainDuration = s_duration;
-                while (remainDuration > 0)
-                {
-                    remainDuration -= Time.deltaTime;
-                    yield return null;
-                }
-                caster.Speed -= originSpeed;
+                caster.Affect(buff);
 
             }
         }
         
         yield return null;
+    }
+
+
+    public class Buff_Haste : BaseBuff
+    {
+        public override string BuffName => "헤이스트";
+        public override string BuffDescription => "일정 시간동안 이동속도가 두 배로 증가합니다.";
+        public override Sprite BuffImage => _buffImage;
+        public override float Duration => 3f;
+        public override float RemainDuration => _remainDuration;
+
+        Sprite _buffImage;
+
+        int _originSpeed;
+        float _remainDuration;
+        
+        public Buff_Haste(Sprite image)
+        {
+            _buffImage = image;
+            _remainDuration = Duration;
+        }
+
+        public override void StartBuff(Player owner)
+        {
+            _originSpeed = owner.Speed;
+            owner.Speed += _originSpeed;
+        }
+
+        public override void EndBuff(Player owner)
+        {
+            owner.Speed -= _originSpeed;
+        }
+
+        public override void UpdateBuff(Player owner)
+        {
+            _remainDuration -= Time.deltaTime;
+            
+        }
+        public override bool IsEnd()
+        {
+            return _remainDuration <= 0;
+        }
     }
 }

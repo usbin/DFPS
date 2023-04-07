@@ -4,18 +4,29 @@ using UnityEngine;
 
 public abstract class LivingEntity : MonoBehaviour, ICombatable
 {
+    //사망가능
     public event System.Action<LivingEntity> OnDeath;
     public ParticleSystem DeathEffector;
-    
-
     public BaseItem[] DropItems;
     public int MaxHp;
-    public int Speed;
-    public int Distance;//사정거리
-    public int Hp { get => hp;}
+    public int Hp { get => hp; }
     protected int hp;
     protected bool dead = false;
     public bool Dead { get => dead; }
+
+    //버프 가능
+    public abstract BaseBuff[] AllActiveBuff { get; }
+    public abstract void Affect(BaseBuff buff);
+
+    //스탯 존재
+    public int Speed;
+    public int Distance;//사정거리
+    [field: SerializeField]
+    public int Atk { get; set; }
+    [field: SerializeField]
+    public int AtkSpeed { get; set; }
+    [field: SerializeField]
+    public int Def { get; set; }
 
     public GameObject GameObject
     {
@@ -25,12 +36,6 @@ public abstract class LivingEntity : MonoBehaviour, ICombatable
             else return null;
         }
     }
-    [field:SerializeField]
-    public int Atk { get; set; }
-    [field: SerializeField]
-    public int AtkSpeed { get; set; }
-    [field: SerializeField]
-    public int Def { get; set; }
 
     public virtual void Start()
     {

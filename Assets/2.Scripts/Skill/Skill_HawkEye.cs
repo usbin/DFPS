@@ -33,7 +33,12 @@ public class Skill_HawkEye : BaseSkill
 
     public class Buff_HawkEye : BaseBuff
     {
+        public override string BuffName => "호크아이";
+        public override string BuffDescription => "사정거리가 대폭 증가합니다.";
         public override Sprite BuffImage => _buffImage;
+        public override float Duration => -1f;//무한
+        public override float RemainDuration => Duration;
+
         Sprite _buffImage;
         public Buff_HawkEye(Sprite image)
         {

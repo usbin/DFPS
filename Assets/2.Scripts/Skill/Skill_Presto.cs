@@ -30,6 +30,11 @@ public class Skill_Presto : BaseSkill
     class Buff_Presto : BaseBuff
     {
         public override Sprite BuffImage => _buffImage;
+        public override string BuffName => "프레스토";
+        public override string BuffDescription => "공격속도가 대폭 상승합니다.";
+        public override float Duration => -1;
+        public override float RemainDuration => Duration;
+
         Sprite _buffImage;
 
         public Buff_Presto(Sprite image)

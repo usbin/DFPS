@@ -5,6 +5,7 @@ using UnityEngine;
 public class Apple : BaseItem
 {
     BaseBuff _buff = new AppleBuff();
+    
 
     public override BaseBuff Buff => _buff;
 
@@ -16,7 +17,11 @@ public class Apple : BaseItem
 
         int _atkEffect = 1;
 
+        public override string BuffName => "사과";
+        public override string BuffDescription => "사과";
         public override Sprite BuffImage => null;
+        public override float Duration => 0;
+        public override float RemainDuration => 0;
 
         public override void StartBuff(Player owner)
         {

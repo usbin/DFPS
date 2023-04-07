@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7789291669774329321}
   - component: {fileID: 6232108543428296785}
   - component: {fileID: 6411293330234878475}
+  - component: {fileID: 3900371387383873153}
   m_Layer: 5
   m_Name: BuffSlot
   m_TagString: Untagged
@@ -75,3 +76,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3900371387383873153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5269627390776304044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d78418901ae0f40a394c318e097a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TooltipCanvasPrefab: {fileID: 6086709064815334665, guid: 8a5f760d296a5fe48b190c4e94bf97af, type: 3}

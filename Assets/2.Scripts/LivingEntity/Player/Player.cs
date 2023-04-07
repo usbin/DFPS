@@ -66,8 +66,31 @@ public class Player : LivingEntity
     //=====================
     // 버프 컨트롤러가 담당
     //=====================
-    public BaseBuff[] AllActiveBuff => _buffController.AllActiveBuff;
-    public void Affect(BaseBuff buff)
+
+    public event System.Action<BaseBuff> OnBuffAdded
+    {
+        add
+        {
+            _buffController.OnBuffAdded += value;
+        }
+        remove
+        {
+            _buffController.OnBuffAdded -= value;
+        }
+    }
+    public event System.Action<BaseBuff> OnBuffRemoved
+    {
+        add
+        {
+            _buffController.OnBuffRemoved += value;
+        }
+        remove
+        {
+            _buffController.OnBuffRemoved -= value;
+        }
+    }
+    public override BaseBuff[] AllActiveBuff => _buffController.AllActiveBuff;
+    public override void Affect(BaseBuff buff)
     {
         _buffController.Affect(buff);
     }

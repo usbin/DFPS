@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Wave 3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 85152aba3b5d11748bd7865e150c6516, type: 2}
-  m_sharedMaterial: {fileID: -9203268306864247227, guid: 85152aba3b5d11748bd7865e150c6516, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ebe0bfe15f337a846906989e9e8aea55, type: 2}
+  m_sharedMaterial: {fileID: -3547050632102939547, guid: ebe0bfe15f337a846906989e9e8aea55, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

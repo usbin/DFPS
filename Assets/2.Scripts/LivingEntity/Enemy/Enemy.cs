@@ -20,6 +20,9 @@ public class Enemy : LivingEntity
     NavMeshAgent _pathFinder;
     Transform _target;
     Stat _stat;
+
+    public override BaseBuff[] AllActiveBuff => null;
+
     private void Awake()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -100,6 +103,11 @@ public class Enemy : LivingEntity
     public override void ExecuteSkill(BaseSkill skill, SkillArgs args)
     {
         //적 스킬은 아직 구현x
+    }
+
+    public override void Affect(BaseBuff buff)
+    {
+        // 적 버프는 아직 구현x
     }
 
     enum Stat

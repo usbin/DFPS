@@ -7,13 +7,13 @@ public class PlayerSkillBar : MonoBehaviour
     public Player Player;
     public Image QSkillImage;
     public Image QSkillCooltime;
-    public TMPro.TextMeshProUGUI QSkillTooltip;
+    public ShowTooltip QSkillTooltip;
     public Image ESkillImage;
     public Image ESkillCooltime;
-    public TMPro.TextMeshProUGUI ESkillTooltip;
+    public ShowTooltip ESkillTooltip;
     public Image RSkillImage;
     public Image RSkillCooltime;
-    public TMPro.TextMeshProUGUI RSkillTooltip;
+    public ShowTooltip RSkillTooltip;
 
 
     private void Start()
@@ -41,20 +41,17 @@ public class PlayerSkillBar : MonoBehaviour
             case "Q":
                 QSkillImage.sprite = sprite;
                 QSkillImage.gameObject.SetActive(skillVisible);
-                QSkillTooltip.gameObject.SetActive(skillVisible);
-                QSkillTooltip.text = skill.SkillDescription;
+                QSkillTooltip.SetText(skill.SkillDescription);
                 break;
             case "E":
                 ESkillImage.sprite = sprite;
                 ESkillImage.gameObject.SetActive(skillVisible);
-                ESkillTooltip.gameObject.SetActive(skillVisible);
-                ESkillTooltip.text = skill.SkillDescription;
+                ESkillTooltip.SetText(skill.SkillDescription);
                 break;
             case "R":
                 RSkillImage.sprite = sprite;
                 RSkillImage.gameObject.SetActive(skillVisible);
-                RSkillTooltip.gameObject.SetActive(skillVisible);
-                RSkillTooltip.text = skill.SkillDescription;
+                RSkillTooltip.SetText(skill.SkillDescription);
                 break;
         }
         

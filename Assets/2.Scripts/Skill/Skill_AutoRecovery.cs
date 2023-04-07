@@ -38,7 +38,12 @@ public class Skill_AutoRecovery : BaseSkill
     public class Buff_AutoRecovery : BaseBuff
     {
 
+        public override string BuffName => "자동회복";
+        public override string BuffDescription => "일정시간마다 자동으로 회복합니다.";
         public override Sprite BuffImage => _buffImage;
+        public override float Duration => -1;//무한
+        public override float RemainDuration => Duration;
+
         Sprite _buffImage;
         public Buff_AutoRecovery(Sprite image)
         {
