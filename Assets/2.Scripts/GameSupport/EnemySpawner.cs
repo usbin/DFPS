@@ -7,6 +7,8 @@ public class EnemySpawner : MonoBehaviour
     public int FinalWave => Waves.Length;
     public event System.Action<int> OnWaveStart;
     public event System.Action<int> OnWaveEnd;
+    public event System.Action<LivingEntity> OnEnemyDeathHandler;
+    public event System.Action<Enemy, int> OnEnemyTakeHitHandler;
     public UiController UiController;
 
     public Wave[] Waves;        //***웨이브: 인덱스 0부터 저장
@@ -96,7 +98,10 @@ public class EnemySpawner : MonoBehaviour
             enemy.Speed = currentWaveData.Speed;
             enemy.MaxHp = currentWaveData.maxHp;
             enemy.OnDeath += OnEnemyDeath;
+            enemy.OnDeath += OnEnemyDeathHandler;
             enemy.OnEnemyHit += UiController.OnEnemyTakeHit;
+            enemy.OnEnemyHit += OnEnemyTakeHitHandler;
+
 
             _remainEnemyToSpawn--;
         }

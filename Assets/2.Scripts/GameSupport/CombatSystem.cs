@@ -24,10 +24,3 @@ public class CombatSystem : MonoBehaviour
         return Mathf.Max(attackerAtk - defenderDef, 1);
     }
 }
-
-public struct DamageArgs
-{
-    public int Damage;
-    public ICombatable Target;
-}
-

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4904985185046280}
   - component: {fileID: 33243551252582352}
   - component: {fileID: 23900384595569618}
+  - component: {fileID: -2199372619759155872}
   m_Layer: 0
   m_Name: tombstone1
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-2199372619759155872
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658813402916906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 42f2040d9f2e7f7499bf78ca1a1a1ad0, type: 3}

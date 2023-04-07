@@ -56,9 +56,13 @@ public abstract class LivingEntity : MonoBehaviour, ICombatable
         //아이템 드롭
         if (DropItems.Length > 0)
         {
-            int randomIndex = Random.Range(0, DropItems.Length);
-            BaseItem item = Instantiate(DropItems[randomIndex]);
-            item.transform.position = transform.position;
+            //10% 확률로 드롭
+            if(Random.Range(1, 11) ==1)
+            {
+                int randomIndex = Random.Range(0, DropItems.Length);
+                BaseItem item = Instantiate(DropItems[randomIndex]);
+                item.transform.position = transform.position;
+            }
         }
 
         //이벤트 발생

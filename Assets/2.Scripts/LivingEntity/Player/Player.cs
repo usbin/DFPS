@@ -9,6 +9,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerSkillController))]
 public class Player : LivingEntity
 {
+    public event System.Action<Player, int> OnPlayerTakeHit;
     public Camera ViewCamera { get => _viewCamera; }
     public BaseSkill.SkillManager SkillManager = new BaseSkill.SkillManager();
 
@@ -33,6 +34,15 @@ public class Player : LivingEntity
     public override void Update()
     {
         base.Update();
+    }
+
+    public override void TakeHit(int damage)
+    {
+        base.TakeHit(damage);
+        if (OnPlayerTakeHit != null)
+        {
+            OnPlayerTakeHit(this, damage);
+        }
     }
 
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UiController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class UiController : MonoBehaviour
     public TMPro.TextMeshProUGUI WaveEndText;
     public Player Player;
     public EnemySpawner WaveManager;
+    public PlayerInput Input;
     Weapon _currentWeapon;
 
     Color _aimColor = Color.red;
@@ -52,7 +54,7 @@ public class UiController : MonoBehaviour
     public void OnEnemyTakeHit(Enemy enemy, int damage)
     {
         DamageEffect effect = Instantiate(EnemyDamageEffect);
-        effect.Show("-" + damage, enemy.transform.position+Vector3.up, Player.transform.forward);
+        effect.Show("-" + damage, enemy.transform.position+Vector3.up, Player.ViewCamera.transform.forward);
         effect.transform.SetParent(DamageCanvas.transform);
 
     }
@@ -101,7 +103,20 @@ public class UiController : MonoBehaviour
             TMPro.TextMeshProUGUI text = Instantiate(WaveEndText);
             text.transform.SetParent(Canvas.transform, false);
             text.text = "Game Clear!!!";
-
+            StartCoroutine(Delay());
         }
+
+    }
+    IEnumerator Delay()
+    {
+        float delay = 2f;
+        while (delay > 0)
+        {
+            delay -= Time.deltaTime;
+            yield return null;
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Input.SwitchCurrentActionMap("UI");
     }
 }
