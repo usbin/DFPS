@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class LivingEntity : MonoBehaviour, ICombatable
 {
     //사망가능
+    public GameObject Graphic;
     public event System.Action<LivingEntity> OnDeath;
     public ParticleSystem DeathEffector;
     public BaseItem[] DropItems;
@@ -50,7 +51,9 @@ public abstract class LivingEntity : MonoBehaviour, ICombatable
     public virtual void Die()
     {
         dead = true;
-        GetComponent<Renderer>().enabled = false;
+        Renderer renderer;
+        if (TryGetComponent(out renderer)) renderer.enabled = false;
+        if (Graphic != null) Graphic.SetActive(false);
 
 
         //아이템 드롭

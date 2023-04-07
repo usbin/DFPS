@@ -38,11 +38,11 @@ public class Player : LivingEntity
 
     public override void TakeHit(int damage)
     {
-        base.TakeHit(damage);
         if (OnPlayerTakeHit != null)
         {
             OnPlayerTakeHit(this, damage);
         }
+        base.TakeHit(damage);
     }
 
 

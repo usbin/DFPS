@@ -3,102 +3,87 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : LivingEntity
+public abstract class Enemy : LivingEntity
 {
     public event System.Action<Enemy, int> OnEnemyHit;
-    public Projectile Projectile;
-    public DamageEffect DamageEffect;
 
-    const float cDistance = 5f;         // 최소 유지거리
-    const float cAttackDistance = 10f;   // 공격을 시작하는 거리
-    const float cAttackCooltime = 1f;
-
-    Material _material;
-    Color _defaultColor;
-    NavMeshAgent _pathFinder;
-    Transform _target;
-    Stat _stat;
+    public Transform DamageViewPoint;
+    protected NavMeshAgent pathFinder;
+    protected Transform target;
+    public Stat CurrentStatus;
 
     public override BaseBuff[] AllActiveBuff => null;
 
-    private void Awake()
+    public virtual void Awake()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player) _target = player.transform;
-        _pathFinder = GetComponent<NavMeshAgent>();
-
-        _pathFinder.speed = Speed;
-        _pathFinder.stoppingDistance = cDistance;
-        _stat = Stat.Moving;
-        _material = GetComponent<MeshRenderer>().material;
-        _defaultColor = _material.color;
+        if(player) target = player.transform;
+        pathFinder = GetComponent<NavMeshAgent>();
+        pathFinder.speed = Speed;
     }
     public override void Start()
     {
         base.Start();
         StartCoroutine(RefreshPath());
-        StartCoroutine(Attack());
 
     }
 
-    // Update is called once per frame
     public override void Update()
     {
-
         base.Update();
+        if(Time.timeScale == 0)
+        {
+            pathFinder.isStopped = true;
+        }
+        else
+        {
+            pathFinder.isStopped = false;
+        }
     }
 
     IEnumerator RefreshPath()
     {
-        while(_target && !dead && _stat!=Stat.Attacking)
+        while(target && !dead)
         {
-            _pathFinder.SetDestination(_target.position);
+            //플레이어쪽으로 방향 틀기
+            Vector3 eulerDifference = Quaternion.FromToRotation(transform.forward, target.transform.position - transform.position).eulerAngles;
+            eulerDifference = new Vector3(eulerDifference.x % 360, eulerDifference.y % 360, eulerDifference.z % 360);
+
+
+            if (CurrentStatus != Stat.Attacking)
+            {
+                pathFinder.SetDestination(target.position);
+
+            }
+            if ((eulerDifference.x > 60 && eulerDifference.x < 300)
+            || (eulerDifference.y > 60 && eulerDifference.y < 300)
+            || (eulerDifference.z > 60 && eulerDifference.z < 300))
+            {
+                float duration = 1f;
+                while (duration > 0)
+                {
+                    Vector3 euler = new Vector3(eulerDifference.x > 180 ? eulerDifference.x - 360 : eulerDifference.x
+                        , eulerDifference.y > 180 ? eulerDifference.y - 360 : eulerDifference.y
+                        , eulerDifference.z > 180 ? eulerDifference.z - 360 : eulerDifference.z);
+                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + euler*Time.deltaTime);
+                    duration -= Time.deltaTime;
+                    yield return null;
+                }
+            }
+
             yield return new WaitForSeconds(0.5f);
         }
     }
 
-    IEnumerator Attack()
-    {
-        //공격
-        //타겟과의 거리가 충분히 가까우면
-        while (_target && !dead)
-        {
-            float distanceFromTargetSqrt = (_target.transform.position - transform.position).sqrMagnitude;
-            float attackDistanceSqrt = Mathf.Pow(cAttackDistance, 2);
-            if(distanceFromTargetSqrt < attackDistanceSqrt)
-            {
-                _stat = Stat.Attacking;
-                //플레이어에게 투사체 날리기
-                Projectile projectile = Instantiate(Projectile, transform.position, Quaternion.LookRotation(_target.position - transform.position));
-                projectile.Attacker = this;
-                _stat = Stat.Moving;
-                yield return new WaitForSeconds(cAttackCooltime);
-            }
-            else yield return null;
-
-        }
-    }
+    
     public override void TakeHit(int damage)
     {
         if(OnEnemyHit != null)
             OnEnemyHit(this, damage);
-        StartCoroutine(HitEffect());
         base.TakeHit(damage);
     }
-    IEnumerator HitEffect()
-    {
-        _material.color = Color.red;
-        float duration = 0.01f;
-        while (duration > 0)
-        {
-            duration -= Time.deltaTime;
-            yield return null;
-            
-        }
-        _material.color = _defaultColor;
-    }
+
 
     public override void ExecuteSkill(BaseSkill skill, SkillArgs args)
     {
@@ -110,7 +95,7 @@ public class Enemy : LivingEntity
         // 적 버프는 아직 구현x
     }
 
-    enum Stat
+    public enum Stat
     {
         Moving, Attacking
     }

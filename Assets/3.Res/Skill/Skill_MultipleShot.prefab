@@ -51,4 +51,4 @@ MonoBehaviour:
   RemainCooltime: 0
   TriggerList:
   - {fileID: 1235171686846941818, guid: 51d6191f359464342a76ffd4d5788d2b, type: 3}
-  EffectorPrefab: {fileID: 9179054801859093382, guid: 288ddb3eb3291464891b91d1fd0a844e, type: 3}
+  EffectorPrefab: {fileID: 1373445148067258967, guid: b433aeac4b07e2a4fb5be4ee3cd61b9b, type: 3}

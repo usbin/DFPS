@@ -52,19 +52,13 @@ public class StatisticsUi : MonoBehaviour
     IEnumerator ShowEffect()
     {
         float delay;
-        delay = 2f;
-        while (delay > 0)
-        {
-            delay -= Time.deltaTime;
-            yield return null;
-        }
-        Panel.gameObject.SetActive(true);
         delay = 1f;
         while (delay > 0)
         {
             delay -= Time.deltaTime;
             yield return null;
         }
+        Panel.gameObject.SetActive(true);
         PlayTimeTextUi.transform.parent.gameObject.SetActive(true);
         delay = 1f;
         while (delay > 0)

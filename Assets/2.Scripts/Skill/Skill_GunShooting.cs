@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Skill_GunShooting : BaseSkill
 {
+    public ParticleSystem AttackEffector;
     protected override SetupHandler OnSetup => null;
 
     protected override SetdownHandler OnSetdown => null;
@@ -21,6 +22,7 @@ public class Skill_GunShooting : BaseSkill
             Gun gun = ((Gun)args.Weapon);
             if (gun != null)
             {
+                Vector3 hitPoint = args.Origin + (args.Direction.normalized * (gun.Distance + args.Caster.Distance));
                 Ray ray = new Ray(args.Origin, args.Direction);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, gun.Distance+args.Caster.Distance))
@@ -28,32 +30,41 @@ public class Skill_GunShooting : BaseSkill
                     LivingEntity combatable = hit.collider.GetComponent<LivingEntity>();
                     if (combatable != null && !combatable.Dead)
                     {
-                        Vector3 point = hit.point;
-                        Debug.DrawRay(ray.origin, point - ray.origin);
+                        hitPoint = hit.point;
+                        Debug.DrawRay(ray.origin, hitPoint - ray.origin);
+                        //목적지에 이펙트 재생
+                        if (AttackEffector != null)
+                        {
+
+                            AttackEffector.transform.position = hitPoint-args.Caster.transform.forward;
+                            AttackEffector.Play();
+                        }
 
                         //attacker의 스탯과 무기 damage를 계산
                         int totalDamage = CombatSystem.CalculateInflictedDamage(args.Caster.Atk + gun.Atk, combatable.Def);
                         AttackResult attackResult;
                         attackResult.Target = combatable;
                         attackResult.Damage = totalDamage;
-                        attackResult.Origin = point;
+                        attackResult.Origin = hitPoint;
 
                         //결과 저장
                         result.AttackResults = new List<AttackResult>();
                         result.AttackResults.Add(attackResult);
 
 
+
                         //공격 이벤트 발생
                         if (skillManager.OnAttack != null)
                             skillManager.OnAttack(args.Caster, combatable, totalDamage);
-
                         combatable.TakeHit(totalDamage);
                         if (gun.LineRenderer)
                         {
-                            StartCoroutine(ShootLineEffect(gun.transform.position, point, gun.LineRenderer));
+                            StartCoroutine(ShootLineEffect(gun.transform.position, hitPoint, gun.LineRenderer));
                         }
                         yield return result;
                     }
+
+                    
                 }
             }
         }

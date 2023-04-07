@@ -47,6 +47,7 @@ MonoBehaviour:
   Atk: 1
   Speed: 20
   Distance: 30
+  collider: {fileID: 5937249127297401316}
 --- !u!1 &5937249127297401314
 GameObject:
   m_ObjectHideFlags: 0

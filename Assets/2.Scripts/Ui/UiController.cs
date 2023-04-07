@@ -12,9 +12,11 @@ public class UiController : MonoBehaviour
     public Canvas DamageCanvas;
     public Canvas Canvas;
     public TMPro.TextMeshProUGUI WaveEndText;
+    public TMPro.TextMeshProUGUI GameOverTextUi;
     public Player Player;
     public EnemySpawner WaveManager;
     public PlayerInput Input;
+    public Statistics Statistics;
     Weapon _currentWeapon;
 
     Color _aimColor = Color.red;
@@ -25,6 +27,7 @@ public class UiController : MonoBehaviour
     {
         WaveManager.OnWaveStart += OnWaveStart;
         WaveManager.OnWaveEnd += OnWaveEnd;
+        Player.OnDeath += OnPlayerDead;
     }
 
     // Update is called once per frame
@@ -38,7 +41,7 @@ public class UiController : MonoBehaviour
         if(_currentWeapon != null && _currentWeapon.Type == Weapon.WeaponType.Gun)
         {
             Ray ray = Player.ViewCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(ray, ((Gun)_currentWeapon).Distance, 1 << LayerMask.NameToLayer("Enemy")))
+            if (Physics.Raycast(ray, ((Gun)_currentWeapon).Distance+Player.Distance, 1 << LayerMask.NameToLayer("Enemy")))
             {
 
                 AimPoint.color = _aimColor;
@@ -54,9 +57,21 @@ public class UiController : MonoBehaviour
     public void OnEnemyTakeHit(Enemy enemy, int damage)
     {
         DamageEffect effect = Instantiate(EnemyDamageEffect);
-        effect.Show("-" + damage, enemy.transform.position+Vector3.up, Player.ViewCamera.transform.forward);
+        float randomX = Random.Range(0.5f, 1f);
+        effect.Show(damage.ToString(), enemy.DamageViewPoint.position+Vector3.right*randomX, Player.ViewCamera.transform.forward);
         effect.transform.SetParent(DamageCanvas.transform);
 
+    }
+    public void OnPlayerDead(LivingEntity entity)
+    {
+        if (entity.tag == "Player")
+        {
+            //Á×À½ ¶ç¿ò.
+            TMPro.TextMeshProUGUI text = Instantiate(GameOverTextUi);
+            text.transform.SetParent(Canvas.transform, false);
+            text.text = "Game Over!";
+            StartCoroutine(Delay());
+        }
     }
     IEnumerator GunAttackEffect()
     {
@@ -100,6 +115,7 @@ public class UiController : MonoBehaviour
         // ¿þÀÌºê Á¾·á
         if (wave == WaveManager.FinalWave)
         {
+            Input.DeactivateInput();
             TMPro.TextMeshProUGUI text = Instantiate(WaveEndText);
             text.transform.SetParent(Canvas.transform, false);
             text.text = "Game Clear!!!";
@@ -109,7 +125,7 @@ public class UiController : MonoBehaviour
     }
     IEnumerator Delay()
     {
-        float delay = 2f;
+        float delay = 1f;
         while (delay > 0)
         {
             delay -= Time.deltaTime;
@@ -117,6 +133,6 @@ public class UiController : MonoBehaviour
         }
 
         Cursor.lockState = CursorLockMode.None;
-        Input.SwitchCurrentActionMap("UI");
+        Statistics.ShowStatistics();
     }
 }

@@ -103,6 +103,7 @@ public class ModeSwitcher : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+            Time.timeScale = 0;
         }
         else
         {

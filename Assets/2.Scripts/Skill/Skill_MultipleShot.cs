@@ -41,17 +41,26 @@ public class Skill_MultipleShot : BaseSkill
                     effector.Play();
                 }
                 Collider[] colliders = Physics.OverlapSphere(attackResult.Origin, 2f, 1 << LayerMask.NameToLayer("Enemy"), QueryTriggerInteraction.Collide);
-                foreach (Collider collider in colliders)
+                for(int i=0; i < colliders.Length; i++)
                 {
                     //실제 데미지 입히기
                     LivingEntity combatable;
-                    if (collider.TryGetComponent(out combatable) && !combatable.Dead)
+                    if (colliders[i].TryGetComponent(out combatable) && !combatable.Dead)
                     {
                         int totalDamage = CombatSystem.CalculateInflictedDamage(attackResult.Damage, combatable.Def);
 
                         if (skillManager.OnAttack != null)
                             skillManager.OnAttack(args.Caster, combatable, totalDamage);
-                        combatable.TakeHit(totalDamage);
+
+                        //광역공격의 중심이 된 오브젝트는 데미지 중복으로 주지 않도록 함.
+                        if(attackResult.Target == combatable)
+                        {
+
+                        }
+                        else
+                        {
+                            combatable.TakeHit(totalDamage);
+                        }
                         yield return result;
                     }
                 }

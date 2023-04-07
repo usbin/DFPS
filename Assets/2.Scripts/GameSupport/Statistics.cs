@@ -15,6 +15,7 @@ public class Statistics : MonoBehaviour
     int _kill;
     int _giveDamage;
     int _takeDamage;
+    float _startTime;
 
 
     private void Awake()
@@ -22,17 +23,8 @@ public class Statistics : MonoBehaviour
         Spawner.OnEnemyDeathHandler += OnEnemyDeath;
         Spawner.OnEnemyTakeHitHandler += OnEnemyTakeHit;
         Player.OnPlayerTakeHit += OnPlayerTakeHit;
-        Spawner.OnWaveEnd += OnNextWave;
+        _startTime = Time.time;
     }
-    void OnNextWave(int wave)
-    {
-        //게임 클리어시 띄우기
-        if(Spawner.FinalWave == wave)
-        {
-            ShowStatistics();
-        }
-    }
-
 
     public void OnEnemyDeath(LivingEntity enemy)
     {
@@ -51,7 +43,7 @@ public class Statistics : MonoBehaviour
     {
         StatisticsUi ui = Instantiate(UiPrefab);
         
-        ui.SetPlayTime((int)Time.time);
+        ui.SetPlayTime((int)(Time.time - _startTime));
         
         ui.SetKill(_kill);
         

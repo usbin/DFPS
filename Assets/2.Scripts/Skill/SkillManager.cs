@@ -92,6 +92,8 @@ public abstract partial class BaseSkill : MonoBehaviour
                             }
                         }
                     }
+
+                    
                 }
             }
         }

@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
     public int Atk;
     public int Speed;
     public float Distance;
-    
+    public SphereCollider collider;
 
     float _currentDistance; //현재 날아온 거리
 
@@ -26,14 +26,13 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
 
         float movement = Speed * Time.deltaTime;//움직일 거리
-        if (Physics.Raycast(ray, out hit, movement))
+        Collider[] colliders = Physics.OverlapSphere(transform.position, collider.radius * transform.localScale.x, 1 << LayerMask.NameToLayer("Player"));
+        
+        if (colliders.Length>0)
         {
-            Debug.DrawRay(ray.origin, ray.direction);
-            _target = hit.collider.GetComponent<Player>();
+            _target = colliders[0].GetComponent<Player>();
             if(_target != null)
             {
                 float damage = CombatSystem.CalculateInflictedDamage(Atk + Attacker.Atk, _target.Def);
