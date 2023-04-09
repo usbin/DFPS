@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public event System.Action<LivingEntity> OnEnemyDeathHandler;
     public event System.Action<Enemy, int> OnEnemyTakeHitHandler;
     public UiController UiController;
+    public GameObject SpawnEffectPrefab;
 
     public Wave[] Waves;        //***웨이브: 인덱스 0부터 저장
     public CapsuleCollider SpawnArea;  //스폰할 지역
@@ -90,21 +91,28 @@ public class EnemySpawner : MonoBehaviour
         if(Physics.OverlapSphere(randomPoint, 2, ~layerMask).Length == 0)
         {
             //랜덤 몬스터
-            Wave currentWaveData = Waves[_currentWave - 1];
-            int randomIndex = Random.Range(0, currentWaveData.EnemySpecies.Length);
-            Enemy enemy = Instantiate(currentWaveData.EnemySpecies[randomIndex], new Vector3(randomPoint.x, 1, randomPoint.z), Quaternion.identity);
-            enemy.Atk = currentWaveData.Atk;
-            enemy.Def = currentWaveData.Def;
-            enemy.Speed = currentWaveData.Speed;
-            enemy.MaxHp = currentWaveData.maxHp;
-            enemy.OnDeath += OnEnemyDeath;
-            enemy.OnDeath += OnEnemyDeathHandler;
-            enemy.OnEnemyHit += UiController.OnEnemyTakeHit;
-            enemy.OnEnemyHit += OnEnemyTakeHitHandler;
-
-
-            _remainEnemyToSpawn--;
+            StartCoroutine(SpawnAfterEffect(randomPoint));
+            
         }
+    }
+    IEnumerator SpawnAfterEffect(Vector3 randomPoint)
+    {
+        _remainEnemyToSpawn--;
+        GameObject spawnEffect= Instantiate(SpawnEffectPrefab, randomPoint, Quaternion.identity);//약 2초 후 소환
+        yield return new WaitForSeconds(2.5f);
+        Wave currentWaveData = Waves[_currentWave - 1];
+        int randomIndex = Random.Range(0, currentWaveData.EnemySpecies.Length);
+        Enemy enemy = Instantiate(currentWaveData.EnemySpecies[randomIndex], randomPoint, Quaternion.identity);
+        enemy.Atk = currentWaveData.Atk;
+        enemy.Def = currentWaveData.Def;
+        enemy.Speed = currentWaveData.Speed;
+        enemy.MaxHp = currentWaveData.maxHp;
+        enemy.OnDeath += OnEnemyDeath;
+        enemy.OnDeath += OnEnemyDeathHandler;
+        enemy.OnEnemyHit += UiController.OnEnemyTakeHit;
+        enemy.OnEnemyHit += OnEnemyTakeHitHandler;
+        Destroy(spawnEffect.gameObject);
+
     }
     public void OnEnemyDeath(LivingEntity enemy)
     {

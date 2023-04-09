@@ -107,7 +107,13 @@ public class PlayerControl_Topdown : BasePlayerControl
         _playerRigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         _jumpForce = 0;
 
-
+        //======================
+        // 뒤집힘 방지
+        //======================
+        if (Vector3.Dot(_playerRigidbody.transform.up, Vector3.up) < 0)
+        {
+            _playerRigidbody.transform.rotation = Quaternion.identity;
+        }
     }
 
 

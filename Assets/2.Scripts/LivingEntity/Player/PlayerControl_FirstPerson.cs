@@ -73,6 +73,7 @@ public class PlayerControl_FirstPerson : BasePlayerControl
 
     public override void ApplyChange()
     {
+
         //=====================
         // 이동
         //=====================
@@ -113,6 +114,13 @@ public class PlayerControl_FirstPerson : BasePlayerControl
         _jumpForce = 0;
 
 
+        //======================
+        // 뒤집힘 방지
+        //======================
+        if(Vector3.Dot(_playerRigidbody.transform.up, Vector3.up) < 0)
+        {
+            _playerRigidbody.transform.rotation = Quaternion.identity;
+        }
     }
 
 }
