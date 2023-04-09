@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public GameObject HeadAndBody;   //À§¾Æ·¡·Î ²ô´öÀÌ´Â °Ç ¸Ó¸®+¸öÅë¸¸
     Player _player;
     PlayerInput _input;
     Rigidbody _playerRigidbody;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
         _player = GetComponent<Player>();
         _input = GetComponent<PlayerInput>();
         _playerRigidbody = GetComponent<Rigidbody>();
-        _controls[(int)Player.ViewMode.FIRST_PERSON] = new PlayerControl_FirstPerson(_playerRigidbody);
+        _controls[(int)Player.ViewMode.FIRST_PERSON] = new PlayerControl_FirstPerson(_playerRigidbody, HeadAndBody);
         _controls[(int)Player.ViewMode.TOPDOWN] = new PlayerControl_Topdown(_playerRigidbody);
     }
 
@@ -54,6 +55,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnViewModeChanged(ModeSwitcher.ViewModeChangedArgs args)
     {
+        HeadAndBody.transform.rotation = Quaternion.Euler(0,
+            HeadAndBody.transform.rotation.eulerAngles.y,
+            HeadAndBody.transform.rotation.eulerAngles.z);
         _currentControl = _controls[(int)args.ViewMode];
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     public event System.Action<Enemy, int> OnEnemyTakeHitHandler;
     public UiController UiController;
     public GameObject SpawnEffectPrefab;
+    public TMPro.TextMeshProUGUI RemainEnemyTextUi;
 
     public Wave[] Waves;        //***웨이브: 인덱스 0부터 저장
     public CapsuleCollider SpawnArea;  //스폰할 지역
@@ -70,6 +72,7 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log("웨이브" + _currentWave + " 시작");
         _remainEnemyToSpawn = Waves[_currentWave - 1].EnemyAmount;
         _deadEnemyInWave = 0;
+        RemainEnemyTextUi.text = _remainEnemyToSpawn.ToString() ;
 
     }
     public void SpawnEnemy()
@@ -81,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
         float zRadius = SpawnArea.radius * SpawnArea.transform.localScale.z;
 
         Vector2 randomBase = Random.insideUnitCircle;
-        Vector3 randomPoint = new Vector3(center.x + xRadius * randomBase.x, center.y, center.z + zRadius * randomBase.y);
+        Vector3 randomPoint = new Vector3(center.x + xRadius * randomBase.x, 2.5f, center.z + zRadius * randomBase.y);
 
 
 
@@ -98,25 +101,27 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnAfterEffect(Vector3 randomPoint)
     {
         _remainEnemyToSpawn--;
-        GameObject spawnEffect= Instantiate(SpawnEffectPrefab, randomPoint, Quaternion.identity);//약 2초 후 소환
+        GameObject spawnEffect= Instantiate(SpawnEffectPrefab, new Vector3(randomPoint.x, 1, randomPoint.z), Quaternion.identity);//약 2초 후 소환
         yield return new WaitForSeconds(2.5f);
         Wave currentWaveData = Waves[_currentWave - 1];
         int randomIndex = Random.Range(0, currentWaveData.EnemySpecies.Length);
-        Enemy enemy = Instantiate(currentWaveData.EnemySpecies[randomIndex], randomPoint, Quaternion.identity);
-        enemy.Atk = currentWaveData.Atk;
-        enemy.Def = currentWaveData.Def;
-        enemy.Speed = currentWaveData.Speed;
-        enemy.MaxHp = currentWaveData.maxHp;
+        Enemy enemy = Instantiate(currentWaveData.EnemySpecies[randomIndex], new Vector3(randomPoint.x, 1, randomPoint.z), Quaternion.identity);
+        enemy.Atk = currentWaveData.Atk + currentWaveData.EnemySpecies[randomIndex].Atk;
+        enemy.Def = currentWaveData.Def + currentWaveData.EnemySpecies[randomIndex].Def;
+        enemy.Speed = currentWaveData.Speed + currentWaveData.EnemySpecies[randomIndex].Speed;
+        enemy.MaxHp = currentWaveData.maxHp + currentWaveData.EnemySpecies[randomIndex].MaxHp;
         enemy.OnDeath += OnEnemyDeath;
         enemy.OnDeath += OnEnemyDeathHandler;
         enemy.OnEnemyHit += UiController.OnEnemyTakeHit;
         enemy.OnEnemyHit += OnEnemyTakeHitHandler;
         Destroy(spawnEffect.gameObject);
+        
 
     }
     public void OnEnemyDeath(LivingEntity enemy)
     {
         _deadEnemyInWave++;
+        RemainEnemyTextUi.text = (Waves[_currentWave-1].EnemyAmount - _deadEnemyInWave).ToString();
     }
 
     [System.Serializable]

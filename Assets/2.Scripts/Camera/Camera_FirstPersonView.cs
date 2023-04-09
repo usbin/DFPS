@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class Camera_FirstPersonView : MonoBehaviour
 {
-    public Player Player;
+    public GameObject PlayerHead;
 
     private void LateUpdate()
     {
-        if (Player)
+        if (PlayerHead)
         {
-            Vector3 playerForword = Player.transform.forward;
             transform.position = new Vector3(
-                Player.transform.position.x,
-                Player.transform.position.y + 1,
-                Player.transform.position.z
+                PlayerHead.transform.position.x,
+                PlayerHead.transform.position.y + 1,
+                PlayerHead.transform.position.z
                 );
-            transform.rotation = Player.transform.rotation;
+            transform.rotation = PlayerHead.transform.rotation;
 
         }
     }

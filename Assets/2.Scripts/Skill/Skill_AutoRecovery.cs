@@ -59,11 +59,11 @@ public class Skill_AutoRecovery : BaseSkill
         }
         public override void UpdateBuff(Player owner)
         {
-            //1초마다 1% 회복
+            //5초마다 10% 회복
             remain -= Time.deltaTime;
             if (remain <= 0)
             {
-                owner.Recover(owner.MaxHp / 100);
+                owner.Recover(owner.MaxHp / 10);
                 remain = s_term;
             }
 

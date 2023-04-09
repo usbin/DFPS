@@ -7,7 +7,7 @@ public abstract class LivingEntity : MonoBehaviour, ICombatable
     //사망가능
     public GameObject Graphic;
     public event System.Action<LivingEntity> OnDeath;
-    public ParticleSystem DeathEffector;
+    public ParticleSystem DeathEffectorPrefab;
     public BaseItem[] DropItems;
     public int MaxHp;
     public int Hp { get => hp; }
@@ -59,8 +59,8 @@ public abstract class LivingEntity : MonoBehaviour, ICombatable
         //아이템 드롭
         if (DropItems.Length > 0)
         {
-            //10% 확률로 드롭
-            if(Random.Range(1, 11) ==1)
+            //30% 확률로 드롭
+            if(Random.Range(1, 11) <=3)
             {
                 int randomIndex = Random.Range(0, DropItems.Length);
                 BaseItem item = Instantiate(DropItems[randomIndex]);
@@ -73,27 +73,19 @@ public abstract class LivingEntity : MonoBehaviour, ICombatable
             OnDeath(this);
 
         //사망 애니메이션
-        if (DeathEffector != null)
+        if (DeathEffectorPrefab != null)
         {
-            StartCoroutine(DeathEffect(DeathEffector));
+            ParticleSystem effector = Instantiate(DeathEffectorPrefab);
+            effector.transform.position = transform.position;
+            effector.Play();
+
+            Destroy(gameObject);
         }
         else Destroy(gameObject);
 
         Debug.Log(gameObject.name + " 사망");
     }
 
-    IEnumerator DeathEffect(ParticleSystem effector)
-    {
-
-        effector.transform.position = transform.position;
-        effector.Play();
-        while (effector.IsAlive())
-        {
-            yield return null;
-        }
-
-        Destroy(gameObject);
-    }
 
     public virtual void TakeHit(int damage)
     {

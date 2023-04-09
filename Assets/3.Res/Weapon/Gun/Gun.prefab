@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 193247961764256665}
   - component: {fileID: 7382670092716267513}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  Atk: 0
+  Atk: 10
   Muzzle: {fileID: 8380688346722322165}
   ShootTerm: 0.5
   Layermask:

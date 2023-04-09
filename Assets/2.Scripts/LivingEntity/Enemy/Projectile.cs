@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
     public int Atk;
     public int Speed;
     public float Distance;
-    public SphereCollider collider;
+    public new SphereCollider collider;
 
     float _currentDistance; //현재 날아온 거리
 

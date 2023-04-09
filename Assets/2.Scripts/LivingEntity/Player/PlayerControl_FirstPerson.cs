@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerControl_FirstPerson : BasePlayerControl
 {
     Rigidbody _playerRigidbody;
-
+    GameObject _headAndBody;
     //다음 프레임에 적용할 값들
     Vector3 _movement;          // 이동
     Vector3 _deltaLookDegree;   // 시야
@@ -13,9 +13,10 @@ public class PlayerControl_FirstPerson : BasePlayerControl
 
     
 
-    public PlayerControl_FirstPerson(Rigidbody playerRigidbody)
+    public PlayerControl_FirstPerson(Rigidbody playerRigidbody, GameObject headAndBody)
     {
         _playerRigidbody = playerRigidbody;
+        _headAndBody = headAndBody;
     }
 
     public override void Update(PlayerController.ControlArgs args)
@@ -88,22 +89,24 @@ public class PlayerControl_FirstPerson : BasePlayerControl
         //가용범위: -90도(=270도)<->70도
         //위쪽 90도까지만 올릴 수 있고
         //아래쪽 70도까지만 숙일 수 있음.
-        Vector3 newDegree = _playerRigidbody.transform.rotation.eulerAngles + _deltaLookDegree;
-        if (newDegree.x < 270 && newDegree.x > 70)
+        Vector3 wholeNewDegree = _playerRigidbody.transform.rotation.eulerAngles + _deltaLookDegree;
+        Vector3 headAndBodyNewDegree = _headAndBody.transform.rotation.eulerAngles + _deltaLookDegree;
+        if (headAndBodyNewDegree.x < 270 && headAndBodyNewDegree.x > 70)
         {
             //가용범위가 아닐 때
             if (_deltaLookDegree.x < 0)//위를 볼 때
             {
                 _deltaLookDegree.x = _playerRigidbody.transform.rotation.eulerAngles.x - 270f;
-                newDegree.x = 270;
+                headAndBodyNewDegree.x = 270;
             }
             else
             {
                 _deltaLookDegree.x = _playerRigidbody.transform.rotation.eulerAngles.x - 70f;
-                newDegree.x = 70;
+                headAndBodyNewDegree.x = 70;
             }
         }
-        _playerRigidbody.transform.rotation = Quaternion.Euler(newDegree);
+        _playerRigidbody.transform.rotation = Quaternion.Euler(_playerRigidbody.transform.rotation.eulerAngles.x, wholeNewDegree.y, wholeNewDegree.z);
+        _headAndBody.transform.rotation = Quaternion.Euler(headAndBodyNewDegree.x, _headAndBody.transform.rotation.eulerAngles.y, _headAndBody.transform.rotation.eulerAngles.z);
         //_playerRigidbody.transform.eulerAngles = newDegree;
         _deltaLookDegree = Vector3.zero;
 

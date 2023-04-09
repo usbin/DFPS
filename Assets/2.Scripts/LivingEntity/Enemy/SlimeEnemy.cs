@@ -42,7 +42,7 @@ public class SlimeEnemy : Enemy
         while (target && !dead)
         {
             cooltime -= Time.deltaTime;
-
+            Vector3 targetPos = target.transform.position;
 
             float distanceFromTargetSqrt = (target.transform.position - transform.position).sqrMagnitude;
             float attackDistanceSqrt = Mathf.Pow(cAttackDistance, 2);
@@ -63,8 +63,12 @@ public class SlimeEnemy : Enemy
                     cooltime -= Time.deltaTime;
                     yield return null;
                 }
-                Projectile projectile = Instantiate(Projectile, transform.position, Quaternion.LookRotation(target.position - transform.position));
-                projectile.Attacker = this;
+                if(target != null)
+                {
+                    Projectile projectile = Instantiate(Projectile, transform.position, Quaternion.LookRotation(targetPos - transform.position));
+                    projectile.Attacker = this;
+                }
+               
 
 
             }

@@ -6,8 +6,8 @@ using UnityEngine;
 public class TurtleEnemy : Enemy
 {
 
-    const float cDistance = 4f;         // 최소 유지거리
-    const float cAttackDistance = 4f;   // 공격을 시작하는 거리
+    const float cDistance = 5f;         // 최소 유지거리
+    const float cAttackDistance = 5f;   // 공격을 시작하는 거리
     const float cAttackCooltime = 2f;
 
     public Transform AttackBody;
@@ -60,7 +60,7 @@ public class TurtleEnemy : Enemy
                     cooltime -= Time.deltaTime;
                     yield return null;
                 }
-                if (!dead && Physics.OverlapSphere(AttackBody.transform.position, _collider.radius * transform.localScale.x, 1 << LayerMask.NameToLayer("Player")).Length > 0)
+                if (!dead && Physics.OverlapSphere(AttackBody.transform.position, _collider.radius * transform.localScale.x+0.5f, 1 << LayerMask.NameToLayer("Player")).Length > 0)
                 {
                     Player player = target.GetComponent<Player>();
                     player.TakeHit(CombatSystem.CalculateInflictedDamage(Atk, player.Def));
