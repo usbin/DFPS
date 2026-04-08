@@ -8,6 +8,8 @@ public class WaveManager : MonoBehaviour
     public EnemySpawner EnemySpawner;
     public SkillSelectionUi WaveSkillSelectionUi;
     public ModeSwitcher ModeSwitcher;
+    public AudioClip WaveEndSound;
+    public AudioClip GameClearSound;
 
     public BaseSkill[] FirstRewardSkills = new BaseSkill[3];
     public BaseSkill[] SecondRewardSkills = new BaseSkill[3];
@@ -23,6 +25,14 @@ public class WaveManager : MonoBehaviour
 
     void OnWaveEnd(int wave)
     {
+        if(wave < EnemySpawner.FinalWave)
+        {
+            SoundManager.Instance.PlaySound(WaveEndSound, transform.position);
+        }
+        else
+        {
+            SoundManager.Instance.PlayMusic(WaveEndSound, transform.position);
+        }
         //1웨이브 끝나면 스킬 선택
         if (wave == 1)
         {

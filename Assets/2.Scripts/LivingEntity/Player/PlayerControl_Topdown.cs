@@ -6,17 +6,17 @@ using UnityEngine.InputSystem;
 public class PlayerControl_Topdown : BasePlayerControl
 {
     Rigidbody _playerRigidbody;
-
+    AudioClip _runSound;
     //다음 프레임에 적용할 값들
     bool _lookAtDirty = false;
     Vector3 _movement;          // 이동
     Vector3 _lookAtPos;         // 시야
     float _jumpForce;           // 점프
 
-    public PlayerControl_Topdown(Rigidbody playerRigidbody)
+    public PlayerControl_Topdown(Rigidbody playerRigidbody, AudioClip runSound)
     {
         _playerRigidbody = playerRigidbody;
-
+        _runSound = runSound;
     }
 
     public override void Update(PlayerController.ControlArgs args)
@@ -74,6 +74,7 @@ public class PlayerControl_Topdown : BasePlayerControl
     }
     public void Move(Vector3 movement)
     {
+        if (movement.magnitude > 0 && _playerRigidbody.velocity.y == 0) SoundManager.Instance.PlayWalkSound(_runSound, _playerRigidbody.position);
         _movement += movement;
     }
     public void Jump()

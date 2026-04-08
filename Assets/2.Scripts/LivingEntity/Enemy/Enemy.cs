@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public abstract class Enemy : LivingEntity
 {
     public event System.Action<Enemy, int> OnEnemyHit;
-
+    public AudioClip DeathSound;
     public Transform DamageViewPoint;
     protected NavMeshAgent pathFinder;
     protected Transform target;
@@ -83,7 +83,12 @@ public abstract class Enemy : LivingEntity
             OnEnemyHit(this, damage);
         base.TakeHit(damage);
     }
-
+    public override void Die()
+    {
+        if(DeathSound)
+            SoundManager.Instance.PlaySound(DeathSound, transform.position);
+        base.Die();
+    }
 
     public override void ExecuteSkill(BaseSkill skill, SkillArgs args)
     {

@@ -84,14 +84,16 @@ public class EnemySpawner : MonoBehaviour
         float zRadius = SpawnArea.radius * SpawnArea.transform.localScale.z;
 
         Vector2 randomBase = Random.insideUnitCircle;
-        Vector3 randomPoint = new Vector3(center.x + xRadius * randomBase.x, 2.5f, center.z + zRadius * randomBase.y);
+        Vector3 randomPoint = new Vector3(center.x + xRadius * randomBase.x
+            , 2f
+            , center.z + zRadius * randomBase.y);
 
 
 
 
         // 해당 위치에 충돌체가 없을 때(대략 2미터 반경)
         LayerMask layerMask = 1<<LayerMask.NameToLayer("Item");
-        if(Physics.OverlapSphere(randomPoint, 2, ~layerMask).Length == 0)
+        if(Physics.OverlapSphere(randomPoint, 1.5f, ~layerMask).Length == 0)
         {
             //랜덤 몬스터
             StartCoroutine(SpawnAfterEffect(randomPoint));
@@ -101,11 +103,11 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnAfterEffect(Vector3 randomPoint)
     {
         _remainEnemyToSpawn--;
-        GameObject spawnEffect= Instantiate(SpawnEffectPrefab, new Vector3(randomPoint.x, 1, randomPoint.z), Quaternion.identity);//약 2초 후 소환
+        GameObject spawnEffect= Instantiate(SpawnEffectPrefab, randomPoint, Quaternion.identity);//약 2초 후 소환
         yield return new WaitForSeconds(2.5f);
         Wave currentWaveData = Waves[_currentWave - 1];
         int randomIndex = Random.Range(0, currentWaveData.EnemySpecies.Length);
-        Enemy enemy = Instantiate(currentWaveData.EnemySpecies[randomIndex], new Vector3(randomPoint.x, 1, randomPoint.z), Quaternion.identity);
+        Enemy enemy = Instantiate(currentWaveData.EnemySpecies[randomIndex], randomPoint, Quaternion.identity);
         enemy.Atk = currentWaveData.Atk + currentWaveData.EnemySpecies[randomIndex].Atk;
         enemy.Def = currentWaveData.Def + currentWaveData.EnemySpecies[randomIndex].Def;
         enemy.Speed = currentWaveData.Speed + currentWaveData.EnemySpecies[randomIndex].Speed;

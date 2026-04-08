@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Skill_GunShooting : BaseSkill
 {
+    public AudioClip ShootSound;
     public ParticleSystem AttackEffector;
     protected override SetupHandler OnSetup => null;
 
@@ -22,6 +23,7 @@ public class Skill_GunShooting : BaseSkill
             Gun gun = ((Gun)args.Weapon);
             if (gun != null)
             {
+                SoundManager.Instance.PlaySound2(ShootSound, args.Caster.transform.position);
                 Vector3 hitPoint = args.Origin + (args.Direction.normalized * (gun.Distance + args.Caster.Distance));
                 Ray ray = new Ray(args.Origin, args.Direction);
                 RaycastHit hit;
@@ -35,7 +37,6 @@ public class Skill_GunShooting : BaseSkill
                         //목적지에 이펙트 재생
                         if (AttackEffector != null)
                         {
-
                             AttackEffector.transform.position = hitPoint-args.Caster.transform.forward;
                             AttackEffector.Play();
                         }

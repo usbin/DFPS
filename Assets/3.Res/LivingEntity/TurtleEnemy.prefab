@@ -81,6 +81,7 @@ MonoBehaviour:
   <Atk>k__BackingField: 0
   <AtkSpeed>k__BackingField: 0
   <Def>k__BackingField: 10
+  DeathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
   DamageViewPoint: {fileID: 1745858233206900184}
   CurrentStatus: 0
   AttackBody: {fileID: 1479664603048162777}

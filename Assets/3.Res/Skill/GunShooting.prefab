@@ -49,6 +49,7 @@ MonoBehaviour:
   SkillImage: {fileID: 0}
   Cooltime: 0
   RemainCooltime: 0
+  ShootSound: {fileID: 8300000, guid: 4310474905e266640852f43bd609a1a4, type: 3}
   AttackEffector: {fileID: 1980468064976851590}
 --- !u!1 &6527885268665725278
 GameObject:

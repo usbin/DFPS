@@ -94,6 +94,7 @@ MonoBehaviour:
   <Atk>k__BackingField: 0
   <AtkSpeed>k__BackingField: 0
   <Def>k__BackingField: 0
+  DeathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
   DamageViewPoint: {fileID: 1206322168550024525}
   CurrentStatus: 0
   Projectile: {fileID: 8329446116390999219, guid: dd05e7929b6786246a5bf3fdce107897, type: 3}

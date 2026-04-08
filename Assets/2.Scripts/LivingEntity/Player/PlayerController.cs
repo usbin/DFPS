@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public AudioClip RunSound;
     public GameObject HeadAndBody;   //À§¾Æ·¡·Î ²ô´öÀÌ´Â °Ç ¸Ó¸®+¸öÅë¸¸
     Player _player;
     PlayerInput _input;
@@ -22,8 +23,8 @@ public class PlayerController : MonoBehaviour
         _player = GetComponent<Player>();
         _input = GetComponent<PlayerInput>();
         _playerRigidbody = GetComponent<Rigidbody>();
-        _controls[(int)Player.ViewMode.FIRST_PERSON] = new PlayerControl_FirstPerson(_playerRigidbody, HeadAndBody);
-        _controls[(int)Player.ViewMode.TOPDOWN] = new PlayerControl_Topdown(_playerRigidbody);
+        _controls[(int)Player.ViewMode.FIRST_PERSON] = new PlayerControl_FirstPerson(_playerRigidbody, HeadAndBody, RunSound);
+        _controls[(int)Player.ViewMode.TOPDOWN] = new PlayerControl_Topdown(_playerRigidbody, RunSound);
     }
 
     void Start()

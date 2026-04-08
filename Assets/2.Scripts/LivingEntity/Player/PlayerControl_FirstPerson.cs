@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerControl_FirstPerson : BasePlayerControl
 {
+    AudioClip _runSound;
     Rigidbody _playerRigidbody;
     GameObject _headAndBody;
     //다음 프레임에 적용할 값들
@@ -13,10 +14,11 @@ public class PlayerControl_FirstPerson : BasePlayerControl
 
     
 
-    public PlayerControl_FirstPerson(Rigidbody playerRigidbody, GameObject headAndBody)
+    public PlayerControl_FirstPerson(Rigidbody playerRigidbody, GameObject headAndBody, AudioClip runSound)
     {
         _playerRigidbody = playerRigidbody;
         _headAndBody = headAndBody;
+        _runSound = runSound;
     }
 
     public override void Update(PlayerController.ControlArgs args)
@@ -64,6 +66,11 @@ public class PlayerControl_FirstPerson : BasePlayerControl
     }
     void Move(Vector3 movement)
     {
+        if (movement.magnitude > 0 && _playerRigidbody.velocity.y == 0)
+        {
+            //바닥에 닿아있으면서 움직이고 있을 때
+            SoundManager.Instance.PlayWalkSound(_runSound, _playerRigidbody.position);
+        }
         _movement += movement;
     }
     void Jump()

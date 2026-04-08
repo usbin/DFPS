@@ -20,7 +20,7 @@ public class Skill_Vampiric : BaseSkill
         skillManager.OnAttack -= _onAttack;
     };
 
-    protected override ExecuteHandler OnExecute => throw new System.NotImplementedException();
+    protected override ExecuteHandler OnExecute => null;
 
-    protected override TriggerHandler OnTriggered => throw new System.NotImplementedException();
+    protected override TriggerHandler OnTriggered => null;
 }

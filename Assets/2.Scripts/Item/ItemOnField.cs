@@ -39,10 +39,10 @@ public class ItemOnField : MonoBehaviour
     IEnumerator FallDown()
     {
         //아래쪽의 물체와의 거리가 0이 될 때까지
-        float distance = _collider.bounds.center.y+_collider.bounds.size.y/2f+ cGravitySqrt * Time.deltaTime;
+        float distance = _collider.bounds.size.y/2f+ cGravitySqrt * Time.deltaTime;
         while(!Physics.Raycast(_collider.bounds.center, Vector3.down, distance))
         {
-            _item.transform.Translate(Vector3.down * distance);
+            _item.transform.Translate(Vector3.down * cGravitySqrt * Time.deltaTime);
 
 
             yield return null;
@@ -54,7 +54,7 @@ public class ItemOnField : MonoBehaviour
     //둥실둥실
     IEnumerator Floating()
     {
-        float maxY = transform.position.y + 2f;
+        float maxY = transform.position.y + .5f;
         float minY = transform.position.y;
         while (gameObject != null)
         {
@@ -81,6 +81,7 @@ public class ItemOnField : MonoBehaviour
             {
                 _picked = true;
                 _pickingPlayerEffectController = controller;
+                SoundManager.Instance.PlayPickSound(transform.position);
             }
         }
     }

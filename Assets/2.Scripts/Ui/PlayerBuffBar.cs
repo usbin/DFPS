@@ -86,7 +86,6 @@ public class PlayerBuffBar : MonoBehaviour
         }
         public void DeallocBuffSlot(GameObject buffSlot)
         {
-            //내용 지우기
             buffSlot.SetActive(false);
             _inactiveBuffSlots.Push(buffSlot);
         }
@@ -100,8 +99,5 @@ public class PlayerBuffBar : MonoBehaviour
                 _inactiveBuffSlots.Push(newSlot);
             }
         }
-
-
     }
-
 }
